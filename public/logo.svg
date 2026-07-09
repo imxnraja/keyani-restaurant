@@ -1,0 +1,6 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="80" cy="80" r="76" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <circle cx="80" cy="80" r="66" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+  <text x="80" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="42" fill="#D4AF37">K</text>
+  <path d="M40 110 Q80 122 120 110" stroke="#D4AF37" stroke-width="1.4" fill="none"/>
+</svg>
