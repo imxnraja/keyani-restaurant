@@ -47,7 +47,7 @@ export default function ReviewsPreview() {
         </div>
 
         {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredReviews.map((r, i) => (
             <div
               key={r.id}
@@ -76,20 +76,17 @@ export default function ReviewsPreview() {
 
               {/* Author */}
               <div className="flex items-center gap-3 mt-6 pt-5 border-t border-white/5">
-                <div className="relative">
-                  <img
-                    src={r.image}
-                    alt={r.name}
-                    loading="lazy"
-                    className="w-11 h-11 rounded-full object-cover border border-orange/20"
-                  />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-orange rounded-full border-2 border-bg-card flex items-center justify-center">
-                    <span className="text-white text-[7px] font-bold">★</span>
+                <div className="relative shrink-0">
+                  <div className="w-11 h-11 rounded-full gradient-orange flex items-center justify-center border border-orange/20 shadow-orange-sm">
+                    <span className="font-display text-white text-base font-bold">{r.name.charAt(0)}</span>
+                  </div>
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gold rounded-full border-2 border-bg-card flex items-center justify-center">
+                    <span className="text-black text-[7px] font-bold">★</span>
                   </span>
                 </div>
                 <div>
                   <span className="font-semibold text-sm text-white/80 block tracking-wide">{r.name}</span>
-                  <span className="text-[11px] text-gold-light font-medium block mt-0.5">{r.date}</span>
+                  <span className="text-[11px] text-gold-light font-medium block mt-0.5">{r.city}</span>
                 </div>
               </div>
             </div>

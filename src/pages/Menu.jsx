@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HiLocationMarker, HiPhone } from "react-icons/hi";
 import { MdEventAvailable } from "react-icons/md";
+import { branch1Categories, branch2Categories } from "../data/menuData";
 
 const branches = [
   {
@@ -12,7 +13,7 @@ const branches = [
     phone: "0302 5202020",
     href: "/menu/branch1",
     hours: "12:00 PM – 1:00 AM",
-    features: ["BBQ", "Karahi", "Chanay & Nehari", "Rice & Naan", "Raita & Salad", "Cold Drinks"],
+    features: [...branch1Categories.slice(0, 5).map(c => c.label), "& more"],
     note: "Dine-in & Takeaway",
     hasEvents: false,
   },
@@ -24,7 +25,7 @@ const branches = [
     phone: "0302 2264444",
     href: "/menu/branch2",
     hours: "12:00 PM – 2:00 AM",
-    features: ["BBQ", "Karahi", "Tawa Special", "Chanay & Nehari", "Rice & Naan", "Desserts & more"],
+    features: [...branch2Categories.slice(0, 5).map(c => c.label), "& more"],
     note: "Dine-in, Takeaway & Events",
     hasEvents: true,
   },
@@ -52,7 +53,7 @@ export default function Menu() {
 
       {/* Branch cards */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-24">
-        <div className="grid sm:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {branches.map((b, i) => (
             <div
               key={b.id}

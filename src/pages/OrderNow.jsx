@@ -1,51 +1,60 @@
 import { useEffect, useMemo, useState } from "react";
-import { menuItems, menuCategories } from "../data/menuData";
+import { branch1Categories, branch1Items, branch2Categories, branch2Items } from "../data/menuData";
 import { HiCheckCircle, HiLocationMarker, HiPhone, HiX } from "react-icons/hi";
 import { FaWhatsapp } from "react-icons/fa";
 
 const BRANCHES = [
-  { id: "branch1", name: "Branch 1 — Aslam Market", address: "Aslam Market, Wah Cantt", phone: "0302 5202020", tag: "Branch 1" },
-  { id: "branch2", name: "Branch 2 — GT Road", address: "GT Road, Wah Cantt", phone: "0302 2264444", tag: "Branch 2" },
+  { id: "branch1", name: "Branch 1 — Aslam Market", address: "Aslam Market, Wah Cantt", phone: "0302 5202020", whatsapp: "923025202020", tag: "Branch 1" },
+  { id: "branch2", name: "Branch 2 — GT Road", address: "GT Road, Wah Cantt", phone: "0302 2264444", whatsapp: "923022264444", tag: "Branch 2" },
 ];
 
-// Categories that are NOT available at Branch 1
-const BRANCH1_HIDDEN_CATEGORIES = ["tawa", "icecream"];
-const BRANCH1_HIDDEN_ITEMS = ["d-5"]; // Fresh Juice
-
-// Owner WhatsApp number — all orders go here as receipt
-const OWNER_WHATSAPP = "923055414748";
+// Right-aligns a value against a label within a fixed-width monospace row
+const SLIP_WIDTH = 34;
+function slipRow(label, value, width = SLIP_WIDTH) {
+  const l = String(label);
+  const v = String(value);
+  const gap = Math.max(1, width - l.length - v.length);
+  return l + " ".repeat(gap) + v;
+}
 
 function buildWhatsAppMessage({ form, cartItems, total, branch, payment }) {
   const selectedBranch = BRANCHES.find(b => b.id === branch);
   const orderNo = `KR-${Date.now().toString().slice(-6)}`;
   const time = new Date().toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
+  const deliveryCharge = total > 0 ? 250 : 0;
+  const grandTotal = total + deliveryCharge;
 
   const itemLines = cartItems
-    .map(i => `  • ${i.name} (${i.unit}) × ${i.qty} = Rs. ${(i.price * i.qty).toLocaleString()}`)
+    .map(i => slipRow(`${i.name} (${i.unit}) x${i.qty}`, `Rs.${(i.price * i.qty).toLocaleString()}`))
     .join("\n");
 
+  const slip =
+    `${itemLines}
+${"-".repeat(SLIP_WIDTH)}
+${slipRow("Subtotal", `Rs.${total.toLocaleString()}`)}
+${slipRow("Delivery Charge", `Rs.${deliveryCharge.toLocaleString()}`)}
+${"-".repeat(SLIP_WIDTH)}
+${slipRow("TOTAL", `Rs.${grandTotal.toLocaleString()}`)}`;
+
   const msg =
-    `🍖 *NEW ORDER — KEYANI RESTAURANT*
-━━━━━━━━━━━━━━━━━━━━
-📋 *Order No:* ${orderNo}
-🕐 *Time:* ${time}
-🏪 *Branch:* ${selectedBranch?.name}
+    `🍖 *KEYANI RESTAURANT*
+*Order Receipt*
 
-👤 *CUSTOMER DETAILS*
-━━━━━━━━━━━━━━━━━━━━
-• Name: ${form.name}
-• Phone: ${form.phone}
-• Address: ${form.address}, ${form.city}
-${form.notes ? `• Notes: ${form.notes}` : ""}
-🛒 *ORDER ITEMS*
-━━━━━━━━━━━━━━━━━━━━
-${itemLines}
+Order No: ${orderNo}
+Date: ${time}
+Branch: ${selectedBranch?.name}
 
-━━━━━━━━━━━━━━━━━━━━
-💰 *TOTAL: Rs. ${(total + (total > 0 ? 250 : 0)).toLocaleString()}*
-   (incl. Rs. 250 delivery)
-💳 Payment: ${payment === "cod" ? "Cash on Delivery" : "Bank Transfer"}
-━━━━━━━━━━━━━━━━━━━━
+*Customer Details*
+Name: ${form.name}
+Phone: ${form.phone}
+Address: ${form.address}, ${form.city}${form.notes ? `\nNotes: ${form.notes}` : ""}
+
+\`\`\`
+${slip}
+\`\`\`
+
+Payment: ${payment === "cod" ? "Cash on Delivery" : "Bank Transfer"}
+
 Thank you for ordering from Keyani Restaurant! 🙏`;
 
   return encodeURIComponent(msg);
@@ -130,35 +139,30 @@ export default function OrderNow() {
   const [whatsAppUrl, setWhatsAppUrl] = useState("");
   const [error, setError] = useState("");
 
-  // Filter categories & items based on selected branch
+  // Each branch shows its own real menu; default to Branch 2's (fullest) menu as a preview until a branch is picked
   const filteredCategories = useMemo(() => {
-    if (branch === "branch1") {
-      return menuCategories.filter(cat => !BRANCH1_HIDDEN_CATEGORIES.includes(cat.id));
-    }
-    return menuCategories; // branch2 or no branch selected → full menu
+    if (branch === "branch1") return branch1Categories;
+    return branch2Categories;
   }, [branch]);
+
+  const branchItems = branch === "branch1" ? branch1Items : branch2Items;
 
   // When branch changes, reset activeCategory to first available category
   useEffect(() => {
     if (branch) {
-      const available = branch === "branch1"
-        ? menuCategories.filter(cat => !BRANCH1_HIDDEN_CATEGORIES.includes(cat.id))
-        : menuCategories;
+      const available = branch === "branch1" ? branch1Categories : branch2Categories;
       if (available.length > 0 && !available.some(c => c.id === activeCategory)) {
         setActiveCategory(available[0].id);
       }
     }
   }, [branch]);
 
-  const categoryItems = useMemo(() => {
-    let items = menuItems.filter(i => i.category === activeCategory);
-    if (branch === "branch1") {
-      items = items.filter(i => !BRANCH1_HIDDEN_ITEMS.includes(i.id));
-    }
-    return items;
-  }, [activeCategory, branch]);
+  const categoryItems = useMemo(() =>
+    branchItems.filter(i => i.category === activeCategory),
+    [activeCategory, branchItems]
+  );
   const cartItems = useMemo(() =>
-    Object.entries(cart).filter(([, qty]) => qty > 0).map(([id, qty]) => ({ ...menuItems.find(i => i.id === id), qty })),
+    Object.entries(cart).filter(([, qty]) => qty > 0).map(([id, qty]) => ({ ...branch2Items.find(i => i.id === id), qty })),
     [cart]
   );
   const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
@@ -174,9 +178,10 @@ export default function OrderNow() {
     if (cartItems.length === 0) { setError("Please add at least one item."); return; }
     setError("");
 
-    // Build WhatsApp receipt URL — message goes TO owner number
+    // Build WhatsApp receipt URL — message goes to the selected branch's own WhatsApp
+    const selectedBranch = BRANCHES.find(b => b.id === branch);
     const msg = buildWhatsAppMessage({ form, cartItems, total: subtotal, branch, payment });
-    setWhatsAppUrl(`https://wa.me/${OWNER_WHATSAPP}?text=${msg}`);
+    setWhatsAppUrl(`https://wa.me/${selectedBranch.whatsapp}?text=${msg}`);
     setShowPopup(true);
   };
 
@@ -211,7 +216,7 @@ export default function OrderNow() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
-          <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-7">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-7">
 
             {/* LEFT */}
             <div className="lg:col-span-2 space-y-6">
@@ -222,7 +227,7 @@ export default function OrderNow() {
                   <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">1</span>
                   Select Branch
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {BRANCHES.map(b => (
                     <label key={b.id} className={`relative rounded-2xl border-2 p-5 cursor-pointer transition-all duration-300 ${branch === b.id ? "border-orange bg-orange/8 shadow-orange-sm" : "border-white/8 bg-white/2 hover:border-orange/40"}`}>
                       <input type="radio" name="branch" value={b.id} checked={branch === b.id}
@@ -272,15 +277,21 @@ export default function OrderNow() {
                     <div key={item.id} className="flex items-center justify-between py-3 border-b border-white/4 last:border-0 hover:bg-orange/3 px-2 rounded-lg transition-colors">
                       <div>
                         <p className="text-sm font-semibold text-white/80">{item.name}</p>
-                        <p className="text-xs text-white/30 mt-0.5">{item.unit} · <span className="text-orange font-bold">Rs. {item.price.toLocaleString()}</span></p>
+                        <p className="text-xs text-white/30 mt-0.5">
+                          {item.unit} · <span className="text-orange font-bold">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "Ask in-store"}</span>
+                        </p>
                       </div>
-                      <div className="flex items-center gap-2.5">
-                        <button type="button" onClick={() => updateCart(item.id, -1)}
-                          className="w-8 h-8 rounded-xl border border-white/10 bg-white/3 text-white/60 hover:border-orange/50 hover:text-orange hover:bg-orange/10 transition-all flex items-center justify-center text-lg leading-none">−</button>
-                        <span className={`w-5 text-center text-sm font-bold transition-colors ${(cart[item.id] || 0) > 0 ? "text-orange" : "text-white/30"}`}>{cart[item.id] || 0}</span>
-                        <button type="button" onClick={() => updateCart(item.id, 1)}
-                          className="w-8 h-8 rounded-xl gradient-orange text-white hover:shadow-orange-sm transition-all flex items-center justify-center text-lg leading-none">+</button>
-                      </div>
+                      {item.price != null ? (
+                        <div className="flex items-center gap-2.5">
+                          <button type="button" onClick={() => updateCart(item.id, -1)}
+                            className="w-8 h-8 rounded-xl border border-white/10 bg-white/3 text-white/60 hover:border-orange/50 hover:text-orange hover:bg-orange/10 transition-all flex items-center justify-center text-lg leading-none">−</button>
+                          <span className={`w-5 text-center text-sm font-bold transition-colors ${(cart[item.id] || 0) > 0 ? "text-orange" : "text-white/30"}`}>{cart[item.id] || 0}</span>
+                          <button type="button" onClick={() => updateCart(item.id, 1)}
+                            className="w-8 h-8 rounded-xl gradient-orange text-white hover:shadow-orange-sm transition-all flex items-center justify-center text-lg leading-none">+</button>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-white/20 italic">Not orderable online</span>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -292,7 +303,7 @@ export default function OrderNow() {
                   <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">3</span>
                   Your Details
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
                   <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" className="input" />
                   <input name="address" value={form.address} onChange={handleChange} placeholder="Delivery Address *" className="input sm:col-span-2" />
@@ -373,7 +384,10 @@ export default function OrderNow() {
 
                 <div className="mt-5 p-3 rounded-xl border border-green-500/15 bg-green-500/5 flex items-center gap-2">
                   <FaWhatsapp size={14} className="text-green-400 shrink-0" />
-                  <p className="text-xs text-white/35">Order receipt sent to WhatsApp: <span className="text-green-400 font-bold">0305 5414748</span></p>
+                  <p className="text-xs text-white/35">
+                    Order receipt sent to {branch ? BRANCHES.find(b => b.id === branch)?.tag : "branch"} WhatsApp:{" "}
+                    <span className="text-green-400 font-bold">{branch ? BRANCHES.find(b => b.id === branch)?.phone : "select a branch"}</span>
+                  </p>
                 </div>
               </div>
             </div>

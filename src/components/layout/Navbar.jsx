@@ -43,20 +43,23 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3.5 group shrink-0" onClick={() => setOpen(false)}>
             <div className="relative">
               {/* Premium Double Ring Frame around logo */}
-              <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-gold/50 via-orange/40 to-gold/30 opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
-              <div className="absolute -inset-0.5 rounded-full border border-gold/15 group-hover:border-gold/30 transition-colors duration-500" />
+              <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-gold/60 via-orange/50 to-gold/40 opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none animate-pulse-ring" />
+              <div className="absolute -inset-0.5 rounded-full border border-gold/25 group-hover:border-gold/45 transition-colors duration-500" />
               <img
                 src={logo}
-                alt="Keyani"
-                className="h-10 w-10 rounded-full object-cover border border-transparent p-1 relative z-10 transition-transform duration-500 group-hover:scale-95"
+                alt="Keyani Restaurant"
+                className="h-11 w-11 rounded-full object-cover border border-transparent p-1 relative z-10 transition-transform duration-500 group-hover:scale-95 shadow-gold-sm"
               />
             </div>
             <div className="leading-none pt-0.5">
-              <span className="font-serif-alt text-2xl font-semibold text-gold-light tracking-wide block transition-colors duration-500">
+              <span
+                className="text-gradient-gold font-display text-[26px] font-bold tracking-wide block transition-all duration-500"
+                style={{ letterSpacing: "-0.01em" }}
+              >
                 Keyani
               </span>
-              <span className="text-[9px] tracking-[0.55em] uppercase font-extrabold text-gold block mt-1 transition-colors duration-500 group-hover:text-orange-light">
-                RESTAURANT
+              <span className="text-[9px] tracking-[0.4em] uppercase font-extrabold text-gold/90 block mt-1.5 transition-colors duration-500 group-hover:text-orange-light">
+                Restaurant<span className="text-orange/60 mx-1">•</span>Est. 1985
               </span>
             </div>
           </Link>
@@ -127,13 +130,15 @@ export default function Navbar() {
           {/* Logo in mobile menu */}
           <div className="mb-10 flex flex-col items-center gap-4">
             <div className="relative">
-              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-gold/50 via-orange/40 to-gold/30 opacity-80 pointer-events-none" />
-              <div className="absolute -inset-1 rounded-full border border-gold/25" />
-              <img src={logo} alt="Keyani" className="h-24 w-24 rounded-full object-cover border border-transparent p-1.5 relative z-10 shadow-orange-md" />
+              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-gold/60 via-orange/50 to-gold/40 opacity-85 pointer-events-none animate-pulse-ring" />
+              <div className="absolute -inset-1 rounded-full border border-gold/30" />
+              <img src={logo} alt="Keyani Restaurant" className="h-24 w-24 rounded-full object-cover border border-transparent p-1.5 relative z-10 shadow-gold-sm" />
             </div>
             <div className="text-center">
-              <p className="font-serif-alt text-3xl font-bold text-white tracking-wide">Keyani</p>
-              <p className="text-[10px] tracking-[0.6em] uppercase text-gold font-extrabold mt-1">RESTAURANT</p>
+              <p className="text-gradient-gold font-display text-4xl font-bold tracking-wide" style={{ letterSpacing: "-0.01em" }}>Keyani</p>
+              <p className="text-[10px] tracking-[0.5em] uppercase text-gold/90 font-extrabold mt-2">
+                Restaurant<span className="text-orange/60 mx-1.5">•</span>Est. 1985
+              </p>
             </div>
           </div>
 

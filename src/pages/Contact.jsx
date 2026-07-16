@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FaWhatsapp, FaFacebookF, FaInstagram, FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { branch1Categories, branch2Categories } from "../data/menuData";
 
 const branches = [
   {
@@ -11,7 +12,7 @@ const branches = [
     phone: "0302 5202020",
     whatsapp: "923025202020",
     hours: "12:00 PM – 1:00 AM",
-    menu: ["BBQ", "Karahi", "Chanay & Nehari", "Rice & Naan", "Cold Drinks"],
+    menu: [...branch1Categories.slice(0, 5).map(c => c.label), "& more"],
     service: "Dine-in & Takeaway",
     event: false,
   },
@@ -23,7 +24,7 @@ const branches = [
     phone: "0302 2264444",
     whatsapp: "923022264444",
     hours: "12:00 PM – 2:00 AM",
-    menu: ["BBQ", "Karahi", "Tawa Special", "Chanay & Nehari", "Rice & Naan", "Desserts & more"],
+    menu: [...branch2Categories.slice(0, 5).map(c => c.label), "& more"],
     service: "Dine-in, Takeaway & Events",
     event: true,
   },
@@ -45,7 +46,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
 
         {/* Branch cards */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
           {branches.map(b => (
             <div key={b.id} className="premium-card p-7 flex flex-col">
               {/* Event badge for branch 2 */}
@@ -101,7 +102,7 @@ export default function Contact() {
         </div>
 
         {/* Map + contact info */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="rounded-2xl overflow-hidden h-[380px] border border-white/8">
             <iframe title="Keyani Restaurant" src="https://www.google.com/maps?q=Keyani+Restaurant+Wah+Cantt&output=embed"
               className="w-full h-full border-0 grayscale" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />

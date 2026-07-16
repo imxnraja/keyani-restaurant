@@ -22,7 +22,7 @@ export default function About() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange/2 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20 items-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
         {/* LEFT — Image */}
         <div ref={refL} className="reveal-left relative">
@@ -79,7 +79,7 @@ export default function About() {
           <div className="gold-line mb-10 w-24" />
 
           {/* Values grid */}
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {values.map((v) => (
               <div
                 key={v.title}

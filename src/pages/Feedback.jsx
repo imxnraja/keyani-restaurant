@@ -10,19 +10,19 @@ const BRANCHES = [
 
 function buildMsg({ form, branch }) {
   const b = BRANCHES.find(x => x.id === branch);
-  return `📝 *FEEDBACK — KEYANI RESTAURANT*
-🏪 *Branch:* ${b?.label}
-━━━━━━━━━━━━━━━━━━━━
-👤 *Name:* ${form.name}
-📧 *Email:* ${form.email || "Not provided"}
-📞 *Phone:* ${form.phone || "Not provided"}
+  return `📝 *KEYANI RESTAURANT*
+*Feedback Slip*
 
-💬 *Complaint:*
+Branch: ${b?.label}
+Name: ${form.name}
+Email: ${form.email || "Not provided"}
+Phone: ${form.phone || "Not provided"}
+
+Complaint:
 ${form.complaint}
 
-💡 *Suggestions:*
-${form.suggestions || "None"}
-━━━━━━━━━━━━━━━━━━━━`;
+Suggestions:
+${form.suggestions || "None"}`;
 }
 
 export default function Feedback() {
@@ -56,18 +56,20 @@ export default function Feedback() {
         <p className="text-white/35 mt-3 text-sm">Tell us what went wrong — we read every message.</p>
 
         {/* Branch tabs */}
-        <div className="flex items-center justify-center mt-8">
-          <div className="inline-flex items-center bg-white/5 border border-white/10 rounded-full p-1 gap-1">
-            <button type="button" onClick={() => setBranch("all")}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${branch === "all" ? "bg-white text-charcoal shadow-sm" : "text-white/50 hover:text-white"}`}>
-              Select Branch
-            </button>
-            {BRANCHES.map(b => (
-              <button key={b.id} type="button" onClick={() => setBranch(b.id)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${branch === b.id ? "gradient-orange text-white shadow-orange-sm" : "text-white/50 hover:text-white"}`}>
-                {b.label}
+        <div className="flex items-center justify-center mt-8 px-6">
+          <div className="max-w-full overflow-x-auto scrollbar-hide">
+            <div className="inline-flex items-center bg-white/5 border border-white/10 rounded-full p-1 gap-1">
+              <button type="button" onClick={() => setBranch("all")}
+                className={`shrink-0 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${branch === "all" ? "bg-white text-black shadow-sm" : "text-white/50 hover:text-white"}`}>
+                Select Branch
               </button>
-            ))}
+              {BRANCHES.map(b => (
+                <button key={b.id} type="button" onClick={() => setBranch(b.id)}
+                  className={`shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${branch === b.id ? "gradient-orange text-white shadow-orange-sm" : "text-white/50 hover:text-white"}`}>
+                  {b.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         {branch !== "all" && (
@@ -92,7 +94,7 @@ export default function Feedback() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="premium-card p-8 space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
               <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="input" />
             </div>

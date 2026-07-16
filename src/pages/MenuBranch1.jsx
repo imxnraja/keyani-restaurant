@@ -21,7 +21,7 @@ export default function MenuBranch1() {
     <div className="min-h-screen bg-bg">
       {/* Page Hero */}
       <div className="page-hero px-6">
-        <Link to="/menu" className="inline-flex items-center gap-1.5 text-gold-accent hover:text-orange text-[11px] font-bold uppercase tracking-widest mb-8 transition-colors">
+        <Link to="/menu" className="flex w-fit mx-auto items-center gap-1.5 text-gold-accent hover:text-orange text-[11px] font-bold uppercase tracking-widest mb-8 transition-colors">
           ← All Branches
         </Link>
         <span className="eyebrow">Branch 1 — Aslam Market</span>
@@ -76,12 +76,15 @@ export default function MenuBranch1() {
                   <div className="col-span-7">
                     <p className="text-sm font-semibold text-white/75 group-hover:text-white transition-colors">{variants[0].name}</p>
                     <p className="text-xs text-white/22 mt-0.5 font-light">{variants[0].unit}</p>
+                    {variants[0].desc && (
+                      <p className="text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
+                    )}
                   </div>
                   <div className="col-span-3 text-center">
                     <span className="text-xs text-white/18">—</span>
                   </div>
                   <div className="col-span-2 text-right">
-                    <span className="font-bold text-orange text-sm">Rs. {variants[0].price.toLocaleString()}</span>
+                    <span className="font-bold text-orange text-sm">{variants[0].price != null ? `Rs. ${variants[0].price.toLocaleString()}` : "—"}</span>
                   </div>
                 </div>
               ) : (
@@ -97,7 +100,7 @@ export default function MenuBranch1() {
                         </span>
                       </div>
                       <div className="col-span-2 text-right">
-                        <span className="font-bold text-orange text-sm">Rs. {item.price.toLocaleString()}</span>
+                        <span className="font-bold text-orange text-sm">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "—"}</span>
                       </div>
                     </div>
                   ))}
@@ -125,9 +128,9 @@ export default function MenuBranch1() {
         <div className="mt-6 rounded-2xl border border-white/5 bg-white/2 p-6 flex flex-col sm:flex-row items-center gap-5">
           <div className="text-3xl shrink-0">🎉</div>
           <div className="flex-1 text-center sm:text-left">
-            <p className="text-sm font-semibold text-white/50">Looking for Tawa Special, Desserts, or Events?</p>
+            <p className="text-sm font-semibold text-white/50">Looking for Shinwari, Tawa Special, Shakes, or Events?</p>
             <p className="text-xs text-white/25 mt-1 font-light leading-relaxed">
-              Branch 2 (GT Road) offers a fuller menu including Tawa dishes, Desserts, and a dedicated Events facility with Private Room &amp; Terrace.
+              Branch 2 (GT Road) offers a fuller menu including Shinwari Karahi, Tawa dishes, Bar &amp; Shakes, and a dedicated Events facility with Private Room &amp; Terrace.
             </p>
           </div>
           <Link to="/menu/branch2" className="shrink-0 flex items-center gap-2 border border-orange/25 text-orange text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-orange/8 transition-all">

@@ -45,30 +45,28 @@ function buildWhatsAppMsg({ form, venue, eventType }) {
   const bookingId = `KR-EVT-${Date.now().toString().slice(-5)}`;
 
   const msg =
-    `🎉 *EVENT RESERVATION — KEYANI RESTAURANT*
-🏪 *Branch 2 — GT Road, Wah Cantt*
-━━━━━━━━━━━━━━━━━━━━
-📋 *Booking ID:* ${bookingId}
+    `🎉 *KEYANI RESTAURANT*
+*Event Reservation Slip*
 
-👤 *CONTACT DETAILS*
-━━━━━━━━━━━━━━━━━━━━
-• Name: ${form.name}
-• Phone: ${form.phone}
-• Email: ${form.email || "Not provided"}
+Booking ID: ${bookingId}
+Branch: Branch 2 — GT Road, Wah Cantt
 
-🎊 *EVENT DETAILS*
-━━━━━━━━━━━━━━━━━━━━
-• Event Type: ${selectedEvent?.icon} ${selectedEvent?.label}
-• Venue: ${selectedVenue?.label}
-• Date: ${form.date}
-• Time: ${form.time}
-• Guests: ${form.guests} people
-• Special Requests: ${form.notes || "None"}
+*Contact Details*
+Name: ${form.name}
+Phone: ${form.phone}
+Email: ${form.email || "Not provided"}
 
-💰 *ADVANCE:* 30% of total amount required to confirm booking
-🤝 *Planner Consultation:* FREE
+*Event Details*
+Event Type: ${selectedEvent?.icon} ${selectedEvent?.label}
+Venue: ${selectedVenue?.label}
+Date: ${form.date}
+Time: ${form.time}
+Guests: ${form.guests} people
+Special Requests: ${form.notes || "None"}
 
-━━━━━━━━━━━━━━━━━━━━
+Advance Required: 30% of total to confirm booking
+Planner Consultation: Free
+
 Please reply to confirm availability and discuss details.
 Thank you! 🙏`;
 
@@ -249,7 +247,7 @@ export default function Reservation() {
                 <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">2</span>
                 Select Venue
               </h3>
-              <div className="grid sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {VENUES.map(v => (
                   <button key={v.id} type="button" onClick={() => setVenue(v.id)}
                     className={`p-5 rounded-2xl border-2 text-left transition-all duration-300 ${venue === v.id
@@ -280,7 +278,7 @@ export default function Reservation() {
                 <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">3</span>
                 Event Details
               </h3>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
                 <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" className="input" />
                 <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address (optional)" className="input" />

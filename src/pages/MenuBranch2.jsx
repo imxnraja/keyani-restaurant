@@ -22,7 +22,7 @@ export default function MenuBranch2() {
     <div className="min-h-screen bg-bg">
       {/* Page Hero */}
       <div className="page-hero px-6 pb-6">
-        <Link to="/menu" className="inline-flex items-center gap-1.5 text-gold-accent hover:text-orange text-[11px] font-bold uppercase tracking-widest mb-8 transition-colors">
+        <Link to="/menu" className="flex w-fit mx-auto items-center gap-1.5 text-gold-accent hover:text-orange text-[11px] font-bold uppercase tracking-widest mb-8 transition-colors">
           ← All Branches
         </Link>
         <span className="eyebrow">Branch 2 — GT Road</span>
@@ -74,9 +74,6 @@ export default function MenuBranch2() {
               }`}
             >
               {cat.label}
-              {cat.id === "desserts" && (
-                <span className="ml-2 text-[9px] bg-orange/20 text-orange px-1.5 py-0.5 rounded-full uppercase tracking-wide font-bold">New</span>
-              )}
             </button>
           ))}
         </div>
@@ -95,12 +92,15 @@ export default function MenuBranch2() {
                   <div className="col-span-7">
                     <p className="text-sm font-semibold text-white/75 group-hover:text-white transition-colors">{variants[0].name}</p>
                     <p className="text-xs text-white/22 mt-0.5 font-light">{variants[0].unit}</p>
+                    {variants[0].desc && (
+                      <p className="text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
+                    )}
                   </div>
                   <div className="col-span-3 text-center">
                     <span className="text-xs text-white/18">—</span>
                   </div>
                   <div className="col-span-2 text-right">
-                    <span className="font-bold text-orange text-sm">Rs. {variants[0].price.toLocaleString()}</span>
+                    <span className="font-bold text-orange text-sm">{variants[0].price != null ? `Rs. ${variants[0].price.toLocaleString()}` : "—"}</span>
                   </div>
                 </div>
               ) : (
@@ -116,7 +116,7 @@ export default function MenuBranch2() {
                         </span>
                       </div>
                       <div className="col-span-2 text-right">
-                        <span className="font-bold text-orange text-sm">Rs. {item.price.toLocaleString()}</span>
+                        <span className="font-bold text-orange text-sm">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "—"}</span>
                       </div>
                     </div>
                   ))}

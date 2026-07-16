@@ -27,7 +27,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/3 w-[500px] h-[300px] bg-orange/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[300px] h-[200px] bg-orange/2 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-20 pb-10">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-20 pb-24 sm:pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
           {/* Brand column */}
