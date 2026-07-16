@@ -1,13 +1,37 @@
 import { useEffect } from "react";
 import { FaWhatsapp, FaFacebookF, FaInstagram, FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const branches = [
-  { name:"Branch 1 — Aslam Market", address:"Aslam Market, Wah Cantt, 47040", phone:"0302 5202020" },
-  { name:"Branch 2 — GT Road", address:"GT Road, Wah Cantt, 47040", phone:"0302 2264444" },
+  {
+    id: "branch1",
+    tag: "Branch 1",
+    name: "Aslam Market",
+    address: "Aslam Market, Wah Cantt, 47040",
+    phone: "0302 5202020",
+    whatsapp: "923025202020",
+    hours: "12:00 PM – 1:00 AM",
+    menu: ["BBQ", "Karahi", "Chanay & Nehari", "Rice & Naan", "Cold Drinks"],
+    service: "Dine-in & Takeaway",
+    event: false,
+  },
+  {
+    id: "branch2",
+    tag: "Branch 2",
+    name: "GT Road",
+    address: "GT Road, Wah Cantt, 47040",
+    phone: "0302 2264444",
+    whatsapp: "923022264444",
+    hours: "12:00 PM – 2:00 AM",
+    menu: ["BBQ", "Karahi", "Tawa Special", "Chanay & Nehari", "Rice & Naan", "Desserts & more"],
+    service: "Dine-in, Takeaway & Events",
+    event: true,
+  },
 ];
 
 export default function Contact() {
   useEffect(() => { document.title = "Contact | Keyani Restaurant"; }, []);
+
   return (
     <div className="min-h-screen bg-bg">
       <div className="relative pt-32 pb-14 px-6 text-center overflow-hidden">
@@ -19,25 +43,64 @@ export default function Contact() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        {/* Branches */}
-        <div className="grid sm:grid-cols-2 gap-5 mb-10">
+
+        {/* Branch cards */}
+        <div className="grid sm:grid-cols-2 gap-6 mb-12">
           {branches.map(b => (
-            <div key={b.name} className="premium-card p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl gradient-orange flex items-center justify-center shadow-orange-sm">
-                  <FaMapMarkerAlt size={16} className="text-white" />
+            <div key={b.id} className="premium-card p-7 flex flex-col">
+              {/* Event badge for branch 2 */}
+              {b.event && (
+                <div className="inline-flex items-center gap-1.5 bg-orange/10 border border-orange/20 rounded-full px-3 py-1 mb-4 self-start">
+                  <span className="text-orange text-[10px] font-bold uppercase tracking-wider">🎉 Events & Reservations</span>
                 </div>
-                <h3 className="font-display text-lg font-bold text-white">{b.name}</h3>
+              )}
+
+              <p className="text-orange text-xs font-bold uppercase tracking-widest mb-1">{b.tag}</p>
+              <h2 className="font-display text-3xl font-bold text-white mb-5">{b.name}</h2>
+
+              <div className="space-y-3 mb-5">
+                <div className="flex items-center gap-3">
+                  <FaMapMarkerAlt size={13} className="text-orange shrink-0" />
+                  <p className="text-white/55 text-sm">{b.address}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaPhone size={13} className="text-orange shrink-0" />
+                  <p className="text-white/55 text-sm">{b.phone}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaClock size={13} className="text-orange shrink-0" />
+                  <p className="text-white/55 text-sm">{b.hours}</p>
+                </div>
               </div>
-              <p className="text-white/40 text-sm mb-2">{b.address}</p>
-              <div className="flex items-center gap-2">
-                <FaPhone size={11} className="text-orange" />
-                <p className="text-orange font-bold text-sm">{b.phone}</p>
+
+              <div className="border-t border-white/6 pt-4 mb-5">
+                <p className="text-xs font-bold text-white/30 uppercase tracking-widest mb-3">Available Menu</p>
+                <div className="flex flex-wrap gap-2">
+                  {b.menu.map(m => (
+                    <span key={m} className="text-xs bg-white/5 border border-white/8 text-white/40 px-2.5 py-1 rounded-full">{m}</span>
+                  ))}
+                </div>
+                <p className="text-xs text-white/25 italic mt-3">{b.service}</p>
+              </div>
+
+              {/* Buttons at bottom */}
+              <div className="mt-auto space-y-2">
+                <Link to="/menu"
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", background: "white", color: "#111111", fontWeight: "800", padding: "13px", borderRadius: "12px", fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.08em", textDecoration: "none", border: "none" }}>
+                  View Full Menu →
+                </Link>
+                {b.event && (
+                  <Link to="/reservation"
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.65)", fontWeight: "600", padding: "13px", borderRadius: "12px", fontSize: "13px", textDecoration: "none" }}>
+                    🗓 Book an Event / Reservation
+                  </Link>
+                )}
               </div>
             </div>
           ))}
         </div>
 
+        {/* Map + contact info */}
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="rounded-2xl overflow-hidden h-[380px] border border-white/8">
             <iframe title="Keyani Restaurant" src="https://www.google.com/maps?q=Keyani+Restaurant+Wah+Cantt&output=embed"
@@ -46,10 +109,10 @@ export default function Contact() {
 
           <div className="space-y-4">
             {[
-              { Icon:FaEnvelope, label:"Email", value:"hello@keyanirestaurant.pk" },
-              { Icon:FaClock, label:"Mon–Thu", value:"12:00 PM – 11:30 PM" },
-              { Icon:FaClock, label:"Fri–Sun", value:"12:00 PM – 1:00 AM" },
-            ].map(i=>(
+              { Icon: FaEnvelope, label: "Email", value: "hello@keyanirestaurant.pk" },
+              { Icon: FaClock, label: "Mon–Thu", value: "12:00 PM – 1:00 AM" },
+              { Icon: FaClock, label: "Fri–Sun", value: "12:00 PM – 2:00 AM" },
+            ].map(i => (
               <div key={i.label} className="premium-card p-5 flex items-center gap-4">
                 <div className="w-11 h-11 rounded-xl bg-orange/10 border border-orange/15 flex items-center justify-center text-orange shrink-0">
                   <i.Icon size={16} />

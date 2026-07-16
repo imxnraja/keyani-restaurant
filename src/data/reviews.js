@@ -1,10 +1,59 @@
-export const overallRating = { score: 3.9, count: 500 };
+
+export const overallRating = { score: 4.2, count: 850 };
 
 export const reviews = [
-  { id: 1, name: "Ahmed Raza", image: "https://randomuser.me/api/portraits/men/32.jpg", rating: 5, text: "The Chicken Karahi tastes exactly like home — fresh, spiced right, and the service never rushes you. Our family's Friday spot now." },
-  { id: 2, name: "Sana Khalid", image: "https://randomuser.me/api/portraits/women/44.jpg", rating: 4, text: "Beautiful ambience without losing that home-style flavour. The Beef Tikka is smoky in exactly the right way." },
-  { id: 3, name: "Bilal Hussain", image: "https://randomuser.me/api/portraits/men/65.jpg", rating: 4, text: "Consistently good BBQ and quick service. Wish the naan stayed warmer but everything else is excellent." },
-  { id: 4, name: "Mahnoor Iqbal", image: "https://randomuser.me/api/portraits/women/68.jpg", rating: 5, text: "Booked a family table for a birthday — staff were attentive and the Tawa Special was the highlight of the night." },
-  { id: 5, name: "Usman Tariq", image: "https://randomuser.me/api/portraits/men/12.jpg", rating: 4, text: "Hygienic kitchen, visible from our table, and the food backs it up. Portions are generous for the price." },
-  { id: 6, name: "Hira Nadeem", image: "https://randomuser.me/api/portraits/women/22.jpg", rating: 3, text: "Lovely traditional flavours with a premium presentation. A little wait on weekends, but worth it." },
+  {
+    id: 1,
+    branch: "branch1",
+    branchLabel: "Aslam Market",
+    name: "Muhammad Asif",
+    city: "Wah Cantt",
+    rating: 5,
+    text: "Aslam Market branch has the absolute best traditional taste in Wah. Their Beef Seekh Kababs are juicy and spiced to perfection. Very quick service too — our order was ready in 10 minutes!",
+  },
+  {
+    id: 2,
+    branch: "branch1",
+    branchLabel: "Aslam Market",
+    name: "Ayesha Perveen",
+    city: "Taxila",
+    rating: 4,
+    text: "Ordered Chicken Karahi and Roghni Naans. The food quality and taste are excellent, just like they have been for years. Parking is sometimes tight on weekends but the food is always worth it.",
+  },
+  {
+    id: 3,
+    branch: "branch1",
+    branchLabel: "Aslam Market",
+    name: "Tariq Mehmood",
+    city: "Wah Cantt",
+    rating: 5,
+    text: "If you want authentic, street-style smoky BBQ, this is the original and best Keyani branch in Wah Cantt. Their Mutton Tikka and Chapli Kabab are unmatched. Highly recommend the Nashta on weekdays!",
+  },
+  {
+    id: 4,
+    branch: "branch2",
+    branchLabel: "GT Road",
+    name: "Bilal Ahmed",
+    city: "Rawalpindi",
+    rating: 5,
+    text: "GT Road branch ka ambiance bohat acha hai. Rooftop terrace pe family ka saath khaana ek alag hi experience tha. Karahi was fresh and full of flavor. Will definitely come back for events!",
+  },
+  {
+    id: 5,
+    branch: "branch2",
+    branchLabel: "GT Road",
+    name: "Sana Mirza",
+    city: "Islamabad",
+    rating: 4,
+    text: "Booked the room for a small birthday gathering. Staff was very cooperative and professional. The food — especially Tawa Chicken and Naan — was served hot and fresh. Great experience overall.",
+  },
+  {
+    id: 6,
+    branch: "branch2",
+    branchLabel: "GT Road",
+    name: "Usman Butt",
+    city: "Wah Cantt",
+    rating: 5,
+    text: "GT Road branch mein juices bhi available hain jo Aslam Market pe nahi milte. Mango juice ke saath Beef Karahi — kamaal combination tha! Clean environment and very friendly staff.",
+  },
 ];

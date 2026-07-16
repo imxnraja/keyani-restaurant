@@ -1,62 +1,56 @@
 import { useEffect, useState } from "react";
-import { HiCheckCircle, HiX, HiPhone } from "react-icons/hi";
-import { MdEventAvailable, MdPeople, MdMeetingRoom } from "react-icons/md";
-import { FaWhatsapp, FaUmbrellaBeach } from "react-icons/fa";
-import { BiBuildingHouse } from "react-icons/bi";
+import { HiCheckCircle, HiX } from "react-icons/hi";
+import { FaWhatsapp, FaUsers, FaCalendarAlt, FaClock, FaStar } from "react-icons/fa";
+import { MdRoofing, MdMeetingRoom, MdEventNote } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const OWNER_WHATSAPP = "923055414748";
+const OWNER_WHATSAPP = "923022264444"; // Branch 2 GT Road
 
 const EVENT_TYPES = [
-  { id: "wedding",   label: "Wedding",         emoji: "💍" },
-  { id: "birthday",  label: "Birthday Party",   emoji: "🎂" },
-  { id: "corporate", label: "Corporate Event",  emoji: "💼" },
-  { id: "aqiqah",    label: "Aqiqah / Walima",  emoji: "🌙" },
-  { id: "anniversary", label: "Anniversary",   emoji: "🥂" },
-  { id: "other",     label: "Other",            emoji: "🎉" },
+  { id: "nikkah", label: "Nikkah", icon: "💍" },
+  { id: "birthday", label: "Birthday Party", icon: "🎂" },
+  { id: "dawat", label: "Dawat / Dinner", icon: "🍽️" },
+  { id: "meeting", label: "Corporate Meeting", icon: "💼" },
+  { id: "bridal_shower", label: "Bridal Shower", icon: "👰" },
+  { id: "anniversary", label: "Anniversary", icon: "🌹" },
 ];
 
 const VENUES = [
   {
     id: "room",
-    label: "Private Room",
+    label: "Indoor Room",
     icon: MdMeetingRoom,
-    desc: "An elegant enclosed private room — ideal for intimate gatherings, corporate meetings, and formal events.",
-    capacity: "Up to 50 guests",
-    features: ["Air-conditioned", "Fully private", "Catering included"],
+    desc: "Elegant indoor hall — perfect for intimate gatherings, meetings and formal events.",
+    features: ["Air Conditioned", "Private Setting", "Catering Included"],
   },
   {
     id: "terrace",
     label: "Rooftop Terrace",
-    icon: FaUmbrellaBeach,
-    desc: "An open-air rooftop terrace with stunning views — perfect for evening events, mehndi, and outdoor celebrations.",
-    capacity: "Up to 120 guests",
-    features: ["Open air", "Evening ambience", "Decor support"],
+    icon: MdRoofing,
+    desc: "Open-air terrace with a beautiful view — ideal for dawat, anniversary and birthday events.",
+    features: ["Open Air", "Scenic View", "Flexible Setup"],
   },
   {
     id: "both",
-    label: "Room + Terrace",
-    icon: BiBuildingHouse,
-    desc: "Book both venues for a grand event with indoor and outdoor spaces seamlessly combined.",
-    capacity: "Up to 150 guests",
-    features: ["Maximum space", "Flexible layout", "Full event support"],
+    label: "Room + Terrace (Both)",
+    icon: MdEventNote,
+    desc: "Book both venues for large events like Nikkah and big dawats.",
+    features: ["Maximum Capacity", "Best for Large Events", "Premium Package"],
   },
 ];
 
-function buildReservationWhatsApp({ form, event, venue, planner }) {
+function buildWhatsAppMsg({ form, venue, eventType }) {
   const selectedVenue = VENUES.find(v => v.id === venue);
-  const selectedEvent = EVENT_TYPES.find(e => e.id === event.type);
-  const refNo = `KR-RES-${Date.now().toString().slice(-6)}`;
-  const time = new Date().toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
+  const selectedEvent = EVENT_TYPES.find(e => e.id === eventType);
+  const bookingId = `KR-EVT-${Date.now().toString().slice(-5)}`;
 
   const msg =
-    `🎉 *RESERVATION REQUEST — KEYANI RESTAURANT*
+    `🎉 *EVENT RESERVATION — KEYANI RESTAURANT*
+🏪 *Branch 2 — GT Road, Wah Cantt*
 ━━━━━━━━━━━━━━━━━━━━
-📋 *Ref No:* ${refNo}
-🕐 *Submitted:* ${time}
-🏪 *Branch:* Branch 2 — GT Road, Wah Cantt
+📋 *Booking ID:* ${bookingId}
 
-👤 *CUSTOMER DETAILS*
+👤 *CONTACT DETAILS*
 ━━━━━━━━━━━━━━━━━━━━
 • Name: ${form.name}
 • Phone: ${form.phone}
@@ -64,66 +58,55 @@ function buildReservationWhatsApp({ form, event, venue, planner }) {
 
 🎊 *EVENT DETAILS*
 ━━━━━━━━━━━━━━━━━━━━
-• Event Type: ${selectedEvent?.emoji} ${selectedEvent?.label}
+• Event Type: ${selectedEvent?.icon} ${selectedEvent?.label}
 • Venue: ${selectedVenue?.label}
-• Date: ${event.date}
-• Time: ${event.time}
-• Guests: ~${event.guests} persons
-• Catering Required: ${event.catering ? "Yes ✅" : "No ❌"}
-${event.notes ? `• Notes: ${event.notes}` : ""}
+• Date: ${form.date}
+• Time: ${form.time}
+• Guests: ${form.guests} people
+• Special Requests: ${form.notes || "None"}
 
-${planner.wantsPlanner ? `🧑‍💼 *PROFESSIONAL PLANNER REQUESTED*
-• Preferred Contact Time: ${planner.contactTime}
-• The customer wants to consult our event planner.` : ""}
+💰 *ADVANCE:* 30% of total amount required to confirm booking
+🤝 *Planner Consultation:* FREE
+
 ━━━━━━━━━━━━━━━━━━━━
-Please confirm this reservation at your earliest. 🙏
-Thank you — Keyani Restaurant`;
+Please reply to confirm availability and discuss details.
+Thank you! 🙏`;
 
-  return encodeURIComponent(msg);
+  return `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
-// ── Success Popup ──────────────────────────────────────────
-function SuccessPopup({ onClose, onWhatsApp }) {
+function SuccessPopup({ onClose }) {
   useEffect(() => {
-    const t = setTimeout(onClose, 9000);
+    const t = setTimeout(onClose, 6000);
     return () => clearTimeout(t);
   }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
-      <div
-        className="relative premium-card p-8 sm:p-10 max-w-md w-full text-center shadow-orange-lg"
+      <div className="relative premium-card p-8 sm:p-10 max-w-sm w-full text-center shadow-orange-lg"
         onClick={e => e.stopPropagation()}
-        style={{ animation: "scaleIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards" }}
-      >
-        <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-all">
+        style={{ animation: "scaleIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards", opacity: 0 }}>
+        <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all">
           <HiX size={14} />
         </button>
-        <div className="relative w-20 h-20 mx-auto mb-6">
-          <div className="absolute inset-0 rounded-full gradient-orange animate-pulse-ring opacity-40" />
+        <div className="relative w-20 h-20 mx-auto mb-5">
+          <div className="absolute inset-0 rounded-full gradient-orange opacity-30 animate-pulse-ring" />
           <div className="relative w-20 h-20 rounded-full gradient-orange flex items-center justify-center shadow-orange-lg">
-            <HiCheckCircle className="text-white" size={40} />
+            <HiCheckCircle className="text-white" size={42} />
           </div>
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">Reservation Sent!</h2>
-        <p className="text-white/45 text-sm leading-relaxed mb-8">
-          Your request has been submitted. Please confirm on WhatsApp so we can finalize your booking right away.
+        <h2 className="font-display text-2xl font-bold text-white mb-3">Reservation Sent!</h2>
+        <p className="text-white/45 text-sm leading-relaxed mb-6">
+          Your event request has been received. Our team will contact you shortly to confirm availability and discuss details.
         </p>
-        <button
-          onClick={onWhatsApp}
-          className="w-full flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1fbd5c] text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-lg mb-3"
-        >
-          <FaWhatsapp size={20} />
-          Confirm Reservation on WhatsApp
-        </button>
-        <button onClick={onClose} className="w-full border border-white/10 bg-white/3 text-white/40 hover:text-white/60 py-3 rounded-xl text-sm font-medium transition-all">
-          Close
+        <p className="text-xs text-orange font-semibold mb-4">📞 Expect a call on your provided number</p>
+        <button onClick={onClose} className="w-full gradient-orange text-white py-3.5 rounded-xl font-bold text-sm shadow-orange-md transition-all">
+          OK, Got it!
         </button>
         <div className="mt-5 h-0.5 w-full bg-white/6 rounded-full overflow-hidden">
-          <div className="h-full bg-orange/50 rounded-full" style={{ animation: "shrink 9s linear forwards" }} />
+          <div className="h-full bg-orange/40 rounded-full" style={{ animation: "shrink 6s linear forwards" }} />
         </div>
-        <p className="text-white/20 text-xs mt-2">Closes automatically in 9 seconds</p>
       </div>
       <style>{`
         @keyframes scaleIn { from{opacity:0;transform:scale(0.88)} to{opacity:1;transform:scale(1)} }
@@ -133,311 +116,219 @@ function SuccessPopup({ onClose, onWhatsApp }) {
   );
 }
 
-// ── Main Component ─────────────────────────────────────────
 export default function Reservation() {
-  useEffect(() => { document.title = "Reservations & Events | Keyani Restaurant"; }, []);
+  useEffect(() => { document.title = "Event Reservation | Keyani Restaurant"; }, []);
 
+  const [eventType, setEventType] = useState("");
   const [venue, setVenue] = useState("");
-  const [event, setEvent] = useState({ type: "", date: "", time: "", guests: 20, catering: true, notes: "" });
-  const [form, setForm] = useState({ name: "", phone: "", email: "" });
-  const [planner, setPlanner] = useState({ wantsPlanner: false, contactTime: "" });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", time: "", guests: "", notes: "" });
   const [showPopup, setShowPopup] = useState(false);
-  const [whatsAppUrl, setWhatsAppUrl] = useState("");
+  const [error, setError] = useState("");
 
-  const handleFormChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleEventChange = e => setEvent({ ...event, [e.target.name]: e.target.value });
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!eventType) { setError("Please select an event type."); return; }
     if (!venue) { setError("Please select a venue."); return; }
-    if (!event.type) { setError("Please select an event type."); return; }
-    if (!event.date) { setError("Please pick a date for your event."); return; }
-    if (!event.time) { setError("Please pick a time for your event."); return; }
-    if (!form.name || !form.phone) { setError("Please fill in your name and phone number."); return; }
-    if (planner.wantsPlanner && !planner.contactTime) { setError("Please specify your preferred contact time for the planner."); return; }
+    if (!form.name || !form.phone || !form.date || !form.time || !form.guests) {
+      setError("Please fill in all required fields."); return;
+    }
     setError("");
-
-    const msg = buildReservationWhatsApp({ form, event, venue, planner });
-    setWhatsAppUrl(`https://wa.me/${OWNER_WHATSAPP}?text=${msg}`);
+    const url = buildWhatsAppMsg({ form, venue, eventType });
+    window.open(url, "_blank");
     setShowPopup(true);
   };
 
-  const handleWhatsApp = () => {
-    window.open(whatsAppUrl, "_blank");
+  const handleClose = () => {
     setShowPopup(false);
-    resetAll();
+    setEventType(""); setVenue("");
+    setForm({ name: "", phone: "", email: "", date: "", time: "", guests: "", notes: "" });
   };
-
-  const handleClosePopup = () => { setShowPopup(false); resetAll(); };
-
-  const resetAll = () => {
-    setVenue("");
-    setEvent({ type: "", date: "", time: "", guests: 20, catering: true, notes: "" });
-    setForm({ name: "", phone: "", email: "" });
-    setPlanner({ wantsPlanner: false, contactTime: "" });
-  };
-
-  // Get today's date in YYYY-MM-DD format for date input min
-  const today = new Date().toISOString().split("T")[0];
 
   return (
     <>
-      {showPopup && <SuccessPopup onClose={handleClosePopup} onWhatsApp={handleWhatsApp} />}
+      {showPopup && <SuccessPopup onClose={handleClose} />}
 
       <div className="min-h-screen bg-bg">
         {/* Hero */}
-        <div className="relative pt-32 pb-14 px-6 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(232,99,10,0.09)_0%,transparent_65%)] pointer-events-none" />
-          <Link to="/menu/branch2" className="inline-flex items-center gap-1.5 text-white/30 hover:text-orange text-xs font-semibold uppercase tracking-widest mb-6 transition-colors">
-            ← Branch 2 Menu
-          </Link>
-          <span className="inline-flex items-center gap-2 text-orange text-xs tracking-[0.35em] uppercase font-bold mb-4 block">
-            <span className="w-6 h-px bg-orange" /> Branch 2 — GT Road <span className="w-6 h-px bg-orange" />
-          </span>
-          <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">Events &amp; Reservations</h1>
-          <p className="text-white/35 mt-3 text-sm max-w-lg mx-auto">
-            Reserve our Private Room or Rooftop Terrace for your special occasion. We'll handle the rest.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
-            <span className="flex items-center gap-2 text-xs text-white/30 bg-white/3 border border-white/8 px-4 py-2 rounded-full">
-              <HiPhone size={12} className="text-orange" /> 0302 2264444
-            </span>
-            <span className="flex items-center gap-2 text-xs text-white/30 bg-white/3 border border-white/8 px-4 py-2 rounded-full">
-              📍 GT Road, Wah Cantt
-            </span>
+        <div className="relative pt-28 pb-14 px-6 lg:px-10 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(232,99,10,0.08)_0%,transparent_60%)] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-64 bg-orange/3 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto text-center">
+            {/* Back link — top left */}
+            <div className="mb-6">
+              <Link to="/menu" className="inline-flex items-center gap-2 text-white/30 hover:text-orange text-xs font-semibold uppercase tracking-widest transition-colors duration-300">
+                ← Back to Menu
+              </Link>
+            </div>
+
+            {/* Branch badge — its own line, left aligned */}
+            <div className="inline-flex items-center justify-center gap-2 bg-orange/10 border border-orange/20 rounded-full px-4 py-1.5 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange" />
+              <span className="text-orange text-xs font-bold tracking-[0.25em] uppercase">Branch 2 — GT Road</span>
+            </div>
+
+            {/* Eyebrow */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="w-6 h-px bg-orange" />
+              <span className="text-orange text-xs tracking-[0.35em] uppercase font-bold">Private Events</span>
+              <span className="w-6 h-px bg-orange" />
+            </div>
+
+            {/* Heading */}
+            <h1 className="font-display text-5xl sm:text-7xl font-bold text-white mb-4 leading-tight">
+              Book Your <span className="text-gradient">Event</span>
+            </h1>
+            <p className="text-white/40 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+              Reserve our Private Room or Rooftop Terrace for your special occasion. We'll handle the rest.
+            </p>
+
+            {/* Info pills */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+              <span className="inline-flex items-center gap-2 bg-white/4 border border-white/8 rounded-full px-4 py-2 text-xs text-white/50">
+                📞 0302 2264444
+              </span>
+              <span className="inline-flex items-center gap-2 bg-white/4 border border-white/8 rounded-full px-4 py-2 text-xs text-white/50">
+                📍 GT Road, Wah Cantt
+              </span>
+              <span className="inline-flex items-center gap-2 bg-white/3 border border-white/6 rounded-full px-4 py-2 text-xs text-white/30">
+                ✗ Events not available at Branch 1
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-24">
-          <form onSubmit={handleSubmit} className="space-y-7">
-
-            {/* ── Step 1: Venue ── */}
-            <div className="premium-card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-bold text-white mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">1</span>
-                Choose Your Venue
-              </h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {VENUES.map(v => {
-                  const Icon = v.icon;
-                  const selected = venue === v.id;
-                  return (
-                    <label
-                      key={v.id}
-                      className={`relative cursor-pointer rounded-2xl border-2 p-5 transition-all duration-300 ${selected ? "border-orange bg-orange/8 shadow-orange-sm" : "border-white/8 bg-white/2 hover:border-orange/35 hover:bg-orange/3"}`}
-                    >
-                      <input type="radio" name="venue" value={v.id} checked={selected} onChange={() => setVenue(v.id)} className="sr-only" />
-                      {selected && (
-                        <span className="absolute top-3 right-3 w-5 h-5 rounded-full gradient-orange flex items-center justify-center text-white text-xs font-bold shadow-orange-sm">✓</span>
-                      )}
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all ${selected ? "gradient-orange shadow-orange-sm" : "bg-white/5 border border-white/10"}`}>
-                        <Icon size={18} className={selected ? "text-white" : "text-white/40"} />
-                      </div>
-                      <p className={`font-bold text-sm mb-1 transition-colors ${selected ? "text-orange" : "text-white/70"}`}>{v.label}</p>
-                      <p className="text-xs text-white/30 leading-relaxed mb-3">{v.desc}</p>
-                      <p className="text-xs font-bold text-white/40 mb-2">👥 {v.capacity}</p>
-                      <div className="flex flex-col gap-1">
-                        {v.features.map(f => (
-                          <span key={f} className="text-[10px] text-white/25 flex items-center gap-1">
-                            <span className="text-orange">✓</span> {f}
-                          </span>
-                        ))}
-                      </div>
-                    </label>
-                  );
-                })}
+        {/* Features bar */}
+        <div className="max-w-4xl mx-auto px-6 mb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { icon: FaStar, label: "Free Planner", sub: "Professional consultation" },
+              { icon: FaCalendarAlt, label: "All Occasions", sub: "Nikkah, Birthday & more" },
+              { icon: FaUsers, label: "Room & Terrace", sub: "Flexible venues" },
+              { icon: FaClock, label: "30% Advance", sub: "To confirm booking" },
+            ].map(f => (
+              <div key={f.label} className="premium-card p-4 text-center">
+                <div className="w-9 h-9 rounded-xl gradient-orange flex items-center justify-center mx-auto mb-2 shadow-orange-sm">
+                  <f.icon size={15} className="text-white" />
+                </div>
+                <p className="text-xs font-bold text-white/80">{f.label}</p>
+                <p className="text-[10px] text-white/30 mt-0.5">{f.sub}</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            {/* ── Step 2: Event Type ── */}
-            <div className="premium-card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-bold text-white mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">2</span>
-                Event Type
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Step 1: Event Type */}
+            <div className="premium-card p-6">
+              <h3 className="font-display text-lg font-bold text-white mb-5 flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">1</span>
+                Select Event Type
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {EVENT_TYPES.map(et => {
-                  const selected = event.type === et.id;
-                  return (
-                    <label
-                      key={et.id}
-                      className={`cursor-pointer rounded-xl border-2 px-4 py-3.5 flex items-center gap-3 transition-all duration-300 ${selected ? "border-orange bg-orange/10 text-orange" : "border-white/8 bg-white/2 text-white/40 hover:border-orange/30 hover:text-white/60"}`}
-                    >
-                      <input type="radio" name="eventType" value={et.id} checked={selected} onChange={() => setEvent({ ...event, type: et.id })} className="sr-only" />
-                      <span className="text-lg">{et.emoji}</span>
-                      <span className="text-sm font-semibold">{et.label}</span>
-                    </label>
-                  );
-                })}
+                {EVENT_TYPES.map(e => (
+                  <button key={e.id} type="button" onClick={() => setEventType(e.id)}
+                    className={`p-4 rounded-xl border-2 text-left transition-all duration-300 ${eventType === e.id
+                        ? "border-orange bg-orange/10"
+                        : "border-white/8 bg-white/2 hover:border-orange/40"
+                      }`}>
+                    <span className="text-2xl block mb-1">{e.icon}</span>
+                    <p className={`text-xs font-bold transition-colors ${eventType === e.id ? "text-orange" : "text-white/60"}`}>{e.label}</p>
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* ── Step 3: Date, Time & Guests ── */}
-            <div className="premium-card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-bold text-white mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">3</span>
-                Date, Time &amp; Guests
+            {/* Step 2: Venue */}
+            <div className="premium-card p-6">
+              <h3 className="font-display text-lg font-bold text-white mb-5 flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">2</span>
+                Select Venue
               </h3>
-              <div className="grid sm:grid-cols-2 gap-5 mb-6">
-                <div>
-                  <label className="block text-xs font-bold text-white/30 uppercase tracking-widest mb-2">Event Date *</label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={event.date}
-                    min={today}
-                    onChange={handleEventChange}
-                    className="input"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-white/30 uppercase tracking-widest mb-2">Event Time *</label>
-                  <input
-                    type="time"
-                    name="time"
-                    value={event.time}
-                    onChange={handleEventChange}
-                    className="input"
-                  />
-                </div>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {VENUES.map(v => (
+                  <button key={v.id} type="button" onClick={() => setVenue(v.id)}
+                    className={`p-5 rounded-2xl border-2 text-left transition-all duration-300 ${venue === v.id
+                        ? "border-orange bg-orange/8 shadow-orange-sm"
+                        : "border-white/8 bg-white/2 hover:border-orange/40"
+                      }`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all ${venue === v.id ? "gradient-orange shadow-orange-sm" : "bg-white/5 border border-white/10"}`}>
+                      <v.icon size={18} className={venue === v.id ? "text-white" : "text-white/40"} />
+                    </div>
+                    <p className={`font-bold text-sm mb-1 ${venue === v.id ? "text-orange" : "text-white/70"}`}>{v.label}</p>
+                    <p className="text-xs text-white/30 leading-relaxed mb-3">{v.desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {v.features.map(f => (
+                        <span key={f} className="text-[10px] bg-white/5 border border-white/8 text-white/40 px-2 py-0.5 rounded-full">{f}</span>
+                      ))}
+                    </div>
+                  </button>
+                ))}
               </div>
-
-              {/* Guest count */}
-              <div className="mb-6">
-                <label className="block text-xs font-bold text-white/30 uppercase tracking-widest mb-3">
-                  Estimated Guests
-                  <span className="ml-2 text-orange font-display text-base normal-case">{event.guests}</span>
-                </label>
-                <input
-                  type="range"
-                  min={5}
-                  max={150}
-                  step={5}
-                  value={event.guests}
-                  onChange={e => setEvent({ ...event, guests: Number(e.target.value) })}
-                  className="w-full accent-orange h-2 rounded-full bg-white/10 cursor-pointer"
-                />
-                <div className="flex justify-between text-xs text-white/20 mt-1">
-                  <span>5</span>
-                  <span>75</span>
-                  <span>150</span>
-                </div>
-              </div>
-
-              {/* Catering */}
-              <div>
-                <p className="text-xs font-bold text-white/30 uppercase tracking-widest mb-3">Include Food Catering?</p>
-                <div className="flex gap-3">
-                  {[{ val: true, label: "✅ Yes, include catering" }, { val: false, label: "❌ No catering needed" }].map(opt => (
-                    <label
-                      key={String(opt.val)}
-                      className={`flex-1 cursor-pointer border-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all text-center ${event.catering === opt.val ? "border-orange bg-orange/10 text-orange" : "border-white/8 bg-white/2 text-white/35 hover:border-orange/30"}`}
-                    >
-                      <input type="radio" checked={event.catering === opt.val} onChange={() => setEvent({ ...event, catering: opt.val })} className="sr-only" />
-                      {opt.label}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Notes */}
-              <div className="mt-5">
-                <label className="block text-xs font-bold text-white/30 uppercase tracking-widest mb-2">Special Requests / Notes</label>
-                <textarea
-                  name="notes"
-                  value={event.notes}
-                  onChange={handleEventChange}
-                  rows={3}
-                  placeholder="E.g. decor preferences, dietary restrictions, specific requirements..."
-                  className="textarea"
-                />
+              <div className="mt-4 p-3 rounded-xl border border-white/6 bg-white/2">
+                <p className="text-xs text-white/30">💡 Capacity details will be discussed during your free consultation with our event planner. Contact us via WhatsApp to discuss your requirements.</p>
               </div>
             </div>
 
-            {/* ── Step 4: Professional Planner ── */}
-            <div className="premium-card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-bold text-white mb-2 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">4</span>
-                Professional Event Planner
-              </h3>
-              <p className="text-sm text-white/35 mb-6 ml-11">Our in-house event planner can help you design a flawless event — from décor to seating to catering coordination.</p>
-
-              {/* Planner toggle */}
-              <label className={`flex items-start gap-4 cursor-pointer rounded-2xl border-2 p-5 transition-all duration-300 ${planner.wantsPlanner ? "border-orange bg-orange/8" : "border-white/8 bg-white/2 hover:border-orange/30"}`}>
-                <div className="relative mt-0.5 shrink-0">
-                  <input
-                    type="checkbox"
-                    checked={planner.wantsPlanner}
-                    onChange={e => setPlanner({ ...planner, wantsPlanner: e.target.checked })}
-                    className="sr-only"
-                  />
-                  <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${planner.wantsPlanner ? "gradient-orange border-transparent shadow-orange-sm" : "border-white/20 bg-white/5"}`}>
-                    {planner.wantsPlanner && <span className="text-white text-xs font-bold">✓</span>}
-                  </div>
-                </div>
-                <div>
-                  <p className={`font-bold text-sm transition-colors ${planner.wantsPlanner ? "text-orange" : "text-white/60"}`}>
-                    🧑‍💼 Yes, I'd like to consult with a professional event planner
-                  </p>
-                  <p className="text-xs text-white/30 mt-1 leading-relaxed">
-                    Our planner will contact you to discuss décor, layout, catering coordination, and make your event unforgettable.
-                  </p>
-                </div>
-              </label>
-
-              {/* Contact time — shown only when planner is selected */}
-              {planner.wantsPlanner && (
-                <div className="mt-5 animate-fadeUp">
-                  <label className="block text-xs font-bold text-white/30 uppercase tracking-widest mb-3">Preferred Time to Be Contacted *</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {["Morning (9–12)", "Afternoon (12–4)", "Evening (4–8)", "Anytime"].map(t => (
-                      <label
-                        key={t}
-                        className={`cursor-pointer rounded-xl border-2 px-3 py-3 text-xs font-semibold text-center transition-all ${planner.contactTime === t ? "border-orange bg-orange/10 text-orange" : "border-white/8 bg-white/2 text-white/40 hover:border-orange/30 hover:text-white/60"}`}
-                      >
-                        <input type="radio" checked={planner.contactTime === t} onChange={() => setPlanner({ ...planner, contactTime: t })} className="sr-only" />
-                        {t}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ── Step 5: Your Details ── */}
-            <div className="premium-card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-bold text-white mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">5</span>
-                Your Details
+            {/* Step 3: Details */}
+            <div className="premium-card p-6">
+              <h3 className="font-display text-lg font-bold text-white mb-5 flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full gradient-orange text-white text-sm flex items-center justify-center font-bold shadow-orange-sm">3</span>
+                Event Details
               </h3>
               <div className="grid sm:grid-cols-2 gap-4">
-                <input name="name" value={form.name} onChange={handleFormChange} placeholder="Full Name *" className="input" />
-                <input name="phone" value={form.phone} onChange={handleFormChange} placeholder="Phone Number *" className="input" />
-                <input name="email" value={form.email} onChange={handleFormChange} placeholder="Email Address (optional)" className="input sm:col-span-2" type="email" />
+                <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
+                <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" className="input" />
+                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address (optional)" className="input" />
+                <input name="guests" type="number" min="1" value={form.guests} onChange={handleChange} placeholder="Number of Guests *" className="input" />
+                <input name="date" type="date" value={form.date} onChange={handleChange} className="input" min={new Date().toISOString().split("T")[0]} />
+                <input name="time" type="time" value={form.time} onChange={handleChange} className="input" />
+                <textarea name="notes" value={form.notes} onChange={handleChange}
+                  placeholder="Special requests, decoration preferences, dietary needs..." rows={3} className="textarea sm:col-span-2" />
               </div>
             </div>
 
-            {/* Error */}
+            {/* Planner note */}
+            <div className="p-5 rounded-2xl border border-orange/20 bg-orange/5">
+              <div className="flex items-start gap-3">
+                <FaStar size={16} className="text-orange mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-sm font-bold text-white/80">Free Professional Planner Consultation</p>
+                  <p className="text-xs text-white/40 mt-1 leading-relaxed">
+                    After submitting your request, our professional event planner will contact you to help plan every detail — decoration, menu, seating, and more. This consultation is completely free.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Advance note */}
+            <div className="p-4 rounded-xl border border-yellow-500/15 bg-yellow-500/5 flex items-start gap-3">
+              <span className="text-yellow-400 text-sm shrink-0 mt-0.5">💰</span>
+              <p className="text-xs text-white/40 leading-relaxed">
+                <span className="text-yellow-400 font-semibold">30% advance payment</span> is required to confirm your booking. Details will be shared by our team after reviewing your request.
+              </p>
+            </div>
+
             {error && (
               <div className="border border-red-500/20 bg-red-500/8 rounded-xl px-4 py-3 text-sm text-red-400 flex items-center gap-2">
                 <span>⚠️</span> {error}
               </div>
             )}
 
-            {/* Submit */}
-            <button
-              type="submit"
-              id="submit-reservation"
-              className="w-full relative gradient-orange text-white py-4 rounded-2xl font-bold text-base shadow-orange-md hover:shadow-orange-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group flex items-center justify-center gap-3"
-            >
+            <button type="submit"
+              className="w-full relative gradient-orange text-white py-4 rounded-2xl font-bold text-base shadow-orange-md hover:shadow-orange-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group flex items-center justify-center gap-3">
               <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12" />
               <FaWhatsapp size={18} />
-              Send Reservation Request via WhatsApp
+              Send Reservation Request
             </button>
 
-            <p className="text-center text-xs text-white/20">
-              Your request will be sent to our team via WhatsApp. We'll confirm your booking within a few hours.
+            <p className="text-center text-xs text-white/25">
+              Reservations only at <span className="text-orange">Branch 2 — GT Road</span> ·{" "}
+              <Link to="/contact" className="text-orange/70 hover:text-orange transition-colors">Contact us</Link> for more info
             </p>
           </form>
         </div>

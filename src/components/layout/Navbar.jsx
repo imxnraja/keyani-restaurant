@@ -18,7 +18,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
+    const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -30,34 +30,61 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-dark shadow-dark py-3" : "bg-transparent py-5"
-      }`}>
-        <nav className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between">
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-700 ${
+          scrolled
+            ? "glass-dark py-3 shadow-dark"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
 
-          <Link to="/" className="flex items-center gap-3 group" onClick={() => setOpen(false)}>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3.5 group shrink-0" onClick={() => setOpen(false)}>
             <div className="relative">
-              <img src={logo} alt="Keyani" className="h-11 w-11 rounded-full object-cover border-2 border-orange/50 transition-all duration-300 group-hover:border-orange group-hover:shadow-orange-sm" />
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-orange rounded-full border-2 border-bg animate-pulse-ring" />
+              {/* Premium Double Ring Frame around logo */}
+              <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-gold/50 via-orange/40 to-gold/30 opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
+              <div className="absolute -inset-0.5 rounded-full border border-gold/15 group-hover:border-gold/30 transition-colors duration-500" />
+              <img
+                src={logo}
+                alt="Keyani"
+                className="h-10 w-10 rounded-full object-cover border border-transparent p-1 relative z-10 transition-transform duration-500 group-hover:scale-95"
+              />
             </div>
-            <div className="leading-none">
-              <span className="font-display text-xl font-bold text-white block">Keyani</span>
-              <span className="text-[9px] tracking-[0.4em] uppercase font-bold text-orange">Restaurant</span>
+            <div className="leading-none pt-0.5">
+              <span className="font-serif-alt text-2xl font-semibold text-gold-light tracking-wide block transition-colors duration-500">
+                Keyani
+              </span>
+              <span className="text-[9px] tracking-[0.55em] uppercase font-extrabold text-gold block mt-1 transition-colors duration-500 group-hover:text-orange-light">
+                RESTAURANT
+              </span>
             </div>
           </Link>
 
-          <ul className="hidden lg:flex items-center gap-1">
+          {/* Desktop nav */}
+          <ul className="hidden lg:flex items-center gap-0.5">
             {links.map((l) => (
               <li key={l.to}>
-                <NavLink to={l.to} end={l.to === "/"} className={({ isActive }) =>
-                  `relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${
-                    isActive ? "text-orange bg-orange/10" : "text-white/60 hover:text-white hover:bg-white/5"
-                  }`
-                }>
+                <NavLink
+                  to={l.to}
+                  end={l.to === "/"}
+                  className={({ isActive }) =>
+                    `relative px-4 py-2.5 text-[13px] font-semibold rounded-lg transition-all duration-300 tracking-wide group ${
+                      isActive
+                        ? "text-orange bg-orange/8"
+                        : "text-white/55 hover:text-white hover:bg-white/4"
+                    }`
+                  }
+                >
                   {({ isActive }) => (
                     <>
                       {l.label}
-                      {isActive && <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-orange" />}
+                      {/* Active underline */}
+                      <span
+                        className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-px rounded-full bg-orange transition-all duration-300 ${
+                          isActive ? "w-4 opacity-100" : "w-0 opacity-0 group-hover:w-3 group-hover:opacity-40"
+                        }`}
+                      />
                     </>
                   )}
                 </NavLink>
@@ -65,32 +92,74 @@ export default function Navbar() {
             ))}
           </ul>
 
+          {/* CTA button */}
           <div className="hidden lg:block">
-            <Link to="/order" className="gradient-orange text-white px-6 py-2.5 rounded-xl text-sm font-bold tracking-wide shadow-orange-sm hover:shadow-orange-md hover:-translate-y-0.5 transition-all duration-300 inline-flex items-center gap-2">
-              Order Now <span>→</span>
+            <Link
+              to="/order"
+              className="btn-orange text-sm px-6 py-2.5"
+            >
+              Order Now →
             </Link>
           </div>
 
-          <button className="lg:hidden w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-white hover:border-orange/50 hover:bg-orange/10 transition-all"
-            onClick={() => setOpen(o => !o)}>
-            {open ? <HiX size={20} /> : <HiMenuAlt3 size={20} />}
+          {/* Mobile burger */}
+          <button
+            className="lg:hidden w-10 h-10 rounded-xl border border-white/10 bg-white/4 flex items-center justify-center text-white hover:border-orange/50 hover:bg-orange/8 transition-all duration-300"
+            onClick={() => setOpen(o => !o)}
+            aria-label="Toggle menu"
+          >
+            {open ? <HiX size={18} /> : <HiMenuAlt3 size={18} />}
           </button>
         </nav>
       </header>
 
       {/* Mobile overlay */}
-      <div className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}>
+      <div
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
+          open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+        }`}
+      >
         <div className="absolute inset-0 bg-bg" />
+        {/* Ambient glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange/6 rounded-full blur-3xl pointer-events-none" />
+
         <div className="relative h-full flex flex-col items-center justify-center gap-1 px-8">
-          <img src={logo} alt="Keyani" className="h-20 w-20 rounded-full object-cover border-4 border-orange shadow-orange-md mb-8" />
+          {/* Logo in mobile menu */}
+          <div className="mb-10 flex flex-col items-center gap-4">
+            <div className="relative">
+              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-gold/50 via-orange/40 to-gold/30 opacity-80 pointer-events-none" />
+              <div className="absolute -inset-1 rounded-full border border-gold/25" />
+              <img src={logo} alt="Keyani" className="h-24 w-24 rounded-full object-cover border border-transparent p-1.5 relative z-10 shadow-orange-md" />
+            </div>
+            <div className="text-center">
+              <p className="font-serif-alt text-3xl font-bold text-white tracking-wide">Keyani</p>
+              <p className="text-[10px] tracking-[0.6em] uppercase text-gold font-extrabold mt-1">RESTAURANT</p>
+            </div>
+          </div>
+
           {links.map((l) => (
-            <NavLink key={l.to} to={l.to} end={l.to === "/"} onClick={() => setOpen(false)}
-              className={({ isActive }) => `w-full text-center py-4 font-display text-2xl font-bold rounded-2xl transition-all duration-300 ${isActive ? "text-orange bg-orange/10" : "text-white/70 hover:text-orange hover:bg-orange/5"}`}>
+            <NavLink
+              key={l.to}
+              to={l.to}
+              end={l.to === "/"}
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `w-full text-center py-4 font-display text-2xl font-bold rounded-2xl transition-all duration-300 ${
+                  isActive
+                    ? "text-orange bg-orange/8"
+                    : "text-white/65 hover:text-white hover:bg-white/3"
+                }`
+              }
+            >
               {l.label}
             </NavLink>
           ))}
-          <Link to="/order" onClick={() => setOpen(false)}
-            className="mt-6 w-full gradient-orange text-white py-4 rounded-2xl font-bold text-center shadow-orange-md text-lg">
+
+          <Link
+            to="/order"
+            onClick={() => setOpen(false)}
+            className="mt-8 w-full btn-orange py-4 rounded-2xl text-base font-bold text-center justify-center"
+          >
             Order Now →
           </Link>
         </div>

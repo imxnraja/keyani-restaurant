@@ -203,13 +203,11 @@ export default function OrderNow() {
 
       <div className="min-h-screen bg-bg">
         {/* Header */}
-        <div className="relative pt-32 pb-14 px-6 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(232,99,10,0.07)_0%,transparent_60%)] pointer-events-none" />
-          <span className="inline-flex items-center gap-2 text-orange text-xs tracking-[0.35em] uppercase font-bold mb-4">
-            <span className="w-6 h-px bg-orange" /> Online Ordering <span className="w-6 h-px bg-orange" />
-          </span>
-          <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">Place Your Order</h1>
-          <p className="text-white/35 mt-3 text-sm">Order will be confirmed via WhatsApp receipt</p>
+        <div className="page-hero px-6">
+          <span className="eyebrow">Online Ordering</span>
+          <h1 className="page-hero-title">Place Your Order</h1>
+          <p className="text-luxury-medium mt-3 text-sm font-medium">Order confirmed via WhatsApp receipt</p>
+          <div className="ornament"><div className="ornament-line" /><div className="ornament-dot" /><div className="ornament-line rev" /></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
@@ -321,8 +319,7 @@ export default function OrderNow() {
               )}
 
               <button type="submit"
-                className="w-full relative gradient-orange text-white py-4 rounded-2xl font-bold text-base shadow-orange-md hover:shadow-orange-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group flex items-center justify-center gap-3">
-                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12" />
+                className="w-full btn-orange rounded-2xl py-4 text-sm group overflow-hidden">
                 <FaWhatsapp size={18} />
                 Place Order — Rs. {total.toLocaleString()}
               </button>
