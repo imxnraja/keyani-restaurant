@@ -47,19 +47,22 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  background-color: var(--bg);
+  overscroll-behavior-y: none;
 }
 
 body {
   font-family: 'Manrope', sans-serif;
   background-color: var(--bg);
   /* Multilayer ambient background for depth */
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.06) 0%, transparent 45%),
     radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 45%),
     radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.02) 0%, transparent 60%);
   background-attachment: fixed;
   color: var(--text-primary);
   overflow-x: hidden;
+  overscroll-behavior-y: none;
   font-size: 15px;
   line-height: 1.75;
   font-weight: 400;
@@ -216,6 +219,32 @@ body::after {
 
 input[type="date"],
 input[type="time"] { color-scheme: dark; }
+
+/* Some mobile browsers (older Android WebView / Samsung Internet) don't fully
+   honor color-scheme for native date/time controls and render the mm/dd/yyyy
+   and --:-- segments in an invisible dark color. Force them explicitly. */
+input[type="date"]::-webkit-datetime-edit,
+input[type="time"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="time"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="time"]::-webkit-datetime-edit-hour-field,
+input[type="time"]::-webkit-datetime-edit-minute-field,
+input[type="time"]::-webkit-datetime-edit-ampm-field {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  opacity: 1 !important;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85) brightness(1.4);
+  opacity: 0.85;
+  cursor: pointer;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    GRADIENTS

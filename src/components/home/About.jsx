@@ -51,7 +51,7 @@ export default function About() {
             className="absolute -bottom-6 right-6 glass-card px-7 py-5"
             style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}
           >
-            <p className="font-serif-alt text-5xl font-semibold text-gradient" style={{ fontStyle: "italic" }}>15+</p>
+            <p className="font-serif-alt text-5xl font-semibold text-gradient" style={{ fontStyle: "italic" }}>40+</p>
             <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-bold mt-1">Years of Flavour</p>
           </div>
         </div>
