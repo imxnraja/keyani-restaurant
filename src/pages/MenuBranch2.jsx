@@ -78,6 +78,13 @@ export default function MenuBranch2() {
           ))}
         </div>
 
+        {active === "breakfast" && (
+          <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-orange/20 bg-orange/8 px-4 py-3">
+            <span className="text-orange text-sm shrink-0">🕐</span>
+            <p className="text-xs text-orange-light font-semibold">Breakfast served on weekends only (Saturday &amp; Sunday).</p>
+          </div>
+        )}
+
         {/* Menu table */}
         <div className="rounded-2xl overflow-hidden border border-white/7">
           <div className="grid grid-cols-12 px-6 py-4 bg-bg-3 border-b border-white/5">
@@ -109,9 +116,10 @@ export default function MenuBranch2() {
                     <div key={item.id} className="menu-row">
                       <div className="col-span-7">
                         <p className={`text-sm transition-colors ${idx === 0 ? "font-semibold text-white/75" : "text-white/35 font-light"}`}>{item.name}</p>
+                        {item.pieces && <p className="text-[10px] text-white/20 mt-0.5">{item.pieces}</p>}
                       </div>
                       <div className="col-span-3 text-center">
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${item.unit === "full" ? "bg-orange/12 text-orange border border-orange/20" : "bg-white/5 text-white/35 border border-white/8"}`}>
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap ${item.unit === "full" ? "bg-orange/12 text-orange border border-orange/20" : "bg-white/5 text-white/35 border border-white/8"}`}>
                           {item.unit === "full" ? "Full" : item.unit === "half" ? "Half" : item.unit}
                         </span>
                       </div>

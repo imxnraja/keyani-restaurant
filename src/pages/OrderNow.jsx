@@ -25,7 +25,7 @@ function buildWhatsAppMessage({ form, cartItems, total, branch, payment }) {
   const grandTotal = total + deliveryCharge;
 
   const itemLines = cartItems
-    .map(i => slipRow(`${i.name} (${i.unit}) x${i.qty}`, `Rs.${(i.price * i.qty).toLocaleString()}`))
+    .map(i => slipRow(`${i.name} (${i.unit}${i.pieces ? `, ${i.pieces}` : ""}) x${i.qty}`, `Rs.${(i.price * i.qty).toLocaleString()}`))
     .join("\n");
 
   const slip =
@@ -272,13 +272,23 @@ export default function OrderNow() {
                     </button>
                   ))}
                 </div>
+                {activeCategory === "breakfast" && (
+                  <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-orange/20 bg-orange/8 px-4 py-3">
+                    <span className="text-orange text-sm shrink-0">🕐</span>
+                    <p className="text-xs text-orange-light font-semibold">
+                      {branch === "branch1" && "Breakfast served until 12:00 PM only."}
+                      {branch === "branch2" && "Breakfast served on weekends only (Saturday & Sunday)."}
+                      {!branch && "Branch 1: breakfast until 12:00 PM · Branch 2: weekends only."}
+                    </p>
+                  </div>
+                )}
                 <div className="space-y-1 max-h-72 overflow-y-auto pr-1 scrollbar-hide">
                   {categoryItems.map(item => (
                     <div key={item.id} className="flex items-center justify-between py-3 border-b border-white/4 last:border-0 hover:bg-orange/3 px-2 rounded-lg transition-colors">
                       <div>
                         <p className="text-sm font-semibold text-white/80">{item.name}</p>
                         <p className="text-xs text-white/30 mt-0.5">
-                          {item.unit} · <span className="text-orange font-bold">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "Ask in-store"}</span>
+                          {item.unit}{item.pieces ? ` (${item.pieces})` : ""} · <span className="text-orange font-bold">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "Ask in-store"}</span>
                         </p>
                       </div>
                       {item.price != null ? (

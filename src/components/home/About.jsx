@@ -2,7 +2,7 @@ import { GiChefToque, GiFarmTractor, GiCook } from "react-icons/gi";
 import { MdOutlineCleanHands } from "react-icons/md";
 import { FaBolt } from "react-icons/fa";
 import useReveal from "../../hooks/useReveal";
-import interior from "../../assets/images/restaurant-interior.jpg";
+import interior from "../../assets/images/storefront-night.jpg";
 
 const values = [
   { icon: GiFarmTractor,        title: "Fresh Ingredients",  text: "Meat and produce sourced daily from trusted local suppliers." },
@@ -30,8 +30,8 @@ export default function About() {
           <div className="relative rounded-3xl overflow-hidden shadow-dark">
             <img
               src={interior}
-              alt="Keyani Restaurant Interior"
-              className="w-full h-[500px] object-cover object-bottom transition-transform duration-[8s] hover:scale-105"
+              alt="Keyani Restaurant Rooftop Terrace"
+              className="w-full h-[500px] object-cover object-[center_75%] transition-transform duration-[8s] hover:scale-105"
               loading="lazy"
             />
             {/* Multi-layer overlay */}

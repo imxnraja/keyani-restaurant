@@ -300,12 +300,12 @@ export const branch2Items = [
   { id: "b2-ff-12", category: "fastfood", name: "Seekh Kebab Paratha Roll",         price: 310, unit: "per piece" },
 
   // ─── WINTER SPECIAL — FISH ───────────────────────────────
-  { id: "b2-fish-1", category: "winter-fish", name: "Dakha Fish",           price: 1590, unit: "full · 16 pcs" },
-  { id: "b2-fish-2", category: "winter-fish", name: "Dakha Fish",           price: 840,  unit: "half · 8 pcs" },
-  { id: "b2-fish-3", category: "winter-fish", name: "Fish Tikka",           price: 2190, unit: "full · 12 pcs" },
-  { id: "b2-fish-4", category: "winter-fish", name: "Fish Tikka",           price: 1140, unit: "half · 6 pcs" },
-  { id: "b2-fish-5", category: "winter-fish", name: "Fish & Chips",         price: 1590, unit: "full · 16 pcs" },
-  { id: "b2-fish-6", category: "winter-fish", name: "Fish & Chips",         price: 840,  unit: "half · 8 pcs" },
+  { id: "b2-fish-1", category: "winter-fish", name: "Dakha Fish",           price: 1590, unit: "full", pieces: "16 pcs" },
+  { id: "b2-fish-2", category: "winter-fish", name: "Dakha Fish",           price: 840,  unit: "half", pieces: "8 pcs" },
+  { id: "b2-fish-3", category: "winter-fish", name: "Fish Tikka",           price: 2190, unit: "full", pieces: "12 pcs" },
+  { id: "b2-fish-4", category: "winter-fish", name: "Fish Tikka",           price: 1140, unit: "half", pieces: "6 pcs" },
+  { id: "b2-fish-5", category: "winter-fish", name: "Fish & Chips",         price: 1590, unit: "full", pieces: "16 pcs" },
+  { id: "b2-fish-6", category: "winter-fish", name: "Fish & Chips",         price: 840,  unit: "half", pieces: "8 pcs" },
   { id: "b2-fish-7", category: "winter-fish", name: "Grill Fish With Rice", price: 3090, unit: "per plate" },
 
   // ─── SOUP ────────────────────────────────────────────────
