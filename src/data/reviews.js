@@ -1,5 +1,5 @@
 
-export const overallRating = { score: 4.2, count: 850 };
+export const overallRating = { score: 4, count: 850 };
 
 export const reviews = [
   {

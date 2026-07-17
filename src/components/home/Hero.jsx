@@ -6,7 +6,7 @@ const HeroParticles = lazy(() => import("./HeroParticles"));
 
 const stats = [
   { value: "1M+", label: "Happy Guests" },
-  { value: "3.9★", label: "Google Rating" },
+  { value: "4★", label: "Google Rating" },
   { value: "2", label: "Branches" },
   { value: "1985", label: "Est." },
 ];
