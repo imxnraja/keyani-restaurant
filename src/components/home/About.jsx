@@ -2,14 +2,14 @@ import { GiChefToque, GiFarmTractor, GiCook } from "react-icons/gi";
 import { MdOutlineCleanHands } from "react-icons/md";
 import { FaBolt } from "react-icons/fa";
 import useReveal from "../../hooks/useReveal";
-import interior from "../../assets/images/storefront-night.jpg";
+import interior from "../../assets/images/breakfast.jpeg";
 
 const values = [
-  { icon: GiFarmTractor,        title: "Fresh Ingredients",  text: "Meat and produce sourced daily from trusted local suppliers." },
-  { icon: GiCook,               title: "Traditional Recipes", text: "Family recipes cooked the way they were meant to be." },
-  { icon: GiChefToque,          title: "Family Environment", text: "A warm dining room built for gatherings, big and small." },
-  { icon: MdOutlineCleanHands,  title: "Hygienic Kitchen",   text: "Open, spotless kitchen — see exactly how your food is made." },
-  { icon: FaBolt,               title: "Fast Service",       text: "Attentive staff and a kitchen built for quick quality turnaround." },
+  { icon: GiFarmTractor, title: "Fresh Ingredients", text: "Meat and produce sourced daily from trusted local suppliers." },
+  { icon: GiCook, title: "Traditional Recipes", text: "Family recipes cooked the way they were meant to be." },
+  { icon: GiChefToque, title: "Family Environment", text: "A warm dining room built for gatherings, big and small." },
+  { icon: MdOutlineCleanHands, title: "Hygienic Kitchen", text: "Open, spotless kitchen — see exactly how your food is made." },
+  { icon: FaBolt, title: "Fast Service", text: "Attentive staff and a kitchen built for quick quality turnaround." },
 ];
 
 export default function About() {
