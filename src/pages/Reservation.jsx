@@ -54,7 +54,6 @@ Branch: Branch 2 — GT Road, Wah Cantt
 *Contact Details*
 Name: ${form.name}
 Phone: ${form.phone}
-Email: ${form.email || "Not provided"}
 
 *Event Details*
 Event Type: ${selectedEvent?.icon} ${selectedEvent?.label}
@@ -119,7 +118,7 @@ export default function Reservation() {
 
   const [eventType, setEventType] = useState("");
   const [venue, setVenue] = useState("");
-  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", time: "", guests: "", notes: "" });
+  const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: "", notes: "" });
   const [dateFocused, setDateFocused] = useState(false);
   const [timeFocused, setTimeFocused] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -143,7 +142,7 @@ export default function Reservation() {
   const handleClose = () => {
     setShowPopup(false);
     setEventType(""); setVenue("");
-    setForm({ name: "", phone: "", email: "", date: "", time: "", guests: "", notes: "" });
+    setForm({ name: "", phone: "", date: "", time: "", guests: "", notes: "" });
   };
 
   return (
@@ -283,7 +282,6 @@ export default function Reservation() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
                 <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" className="input" />
-                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address (optional)" className="input" />
                 <input name="guests" type="number" min="1" value={form.guests} onChange={handleChange} placeholder="Number of Guests *" className="input" />
                 <input
                   name="date"

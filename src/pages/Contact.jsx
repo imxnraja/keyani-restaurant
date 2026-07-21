@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { FaWhatsapp, FaFacebookF, FaInstagram, FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaPhone, FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { branch1Categories, branch2Categories } from "../data/menuData";
 
@@ -110,7 +111,6 @@ export default function Contact() {
 
           <div className="space-y-4">
             {[
-              { Icon: FaEnvelope, label: "Email", value: "hello@keyanirestaurant.pk" },
               { Icon: FaClock, label: "Branch 1 (Aslam Market)", value: "8:30 AM – 12:00 AM" },
               { Icon: FaClock, label: "Branch 2 (GT Road)", value: "Mon–Fri 12 PM–12 AM | Sat–Sun 7 AM–12 AM" },
             ].map(i => (
@@ -130,9 +130,9 @@ export default function Contact() {
                 className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity shadow-dark">
                 <FaWhatsapp size={16} /> WhatsApp
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer"
-                className="w-12 h-12 rounded-xl border border-white/8 bg-white/3 flex items-center justify-center text-white/40 hover:border-orange/50 hover:text-orange hover:bg-orange/10 transition-all"><FaFacebookF /></a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer"
+              <a href="https://www.tiktok.com/@keyanirestaurant?_r=1&_t=ZS-98DSBiIP3Ui" target="_blank" rel="noreferrer" title="TikTok"
+                className="w-12 h-12 rounded-xl border border-white/8 bg-white/3 flex items-center justify-center text-white/40 hover:border-orange/50 hover:text-orange hover:bg-orange/10 transition-all"><FaTiktok /></a>
+              <a href="https://www.instagram.com/keyanirestaurant?igsh=OGc3eXFkeGRwM2lm&utm_source=qr" target="_blank" rel="noreferrer" title="Instagram"
                 className="w-12 h-12 rounded-xl border border-white/8 bg-white/3 flex items-center justify-center text-white/40 hover:border-orange/50 hover:text-orange hover:bg-orange/10 transition-all"><FaInstagram /></a>
             </div>
           </div>

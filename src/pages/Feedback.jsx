@@ -15,7 +15,6 @@ function buildMsg({ form, branch }) {
 
 Branch: ${b?.label}
 Name: ${form.name}
-Email: ${form.email || "Not provided"}
 Phone: ${form.phone || "Not provided"}
 
 Complaint:
@@ -29,7 +28,7 @@ export default function Feedback() {
   useEffect(() => { document.title = "Feedback | Keyani Restaurant"; }, []);
 
   const [branch, setBranch] = useState("all");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", complaint: "", suggestions: "" });
+  const [form, setForm] = useState({ name: "", phone: "", complaint: "", suggestions: "" });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
@@ -87,7 +86,7 @@ export default function Feedback() {
             </div>
             <h3 className="font-display text-2xl font-bold text-white mt-6">Thank You</h3>
             <p className="text-white/40 mt-2 text-sm leading-relaxed">Your feedback has been received. We'll respond within 24 hours.</p>
-            <button onClick={() => { setSent(false); setBranch("all"); setForm({ name: "", email: "", phone: "", complaint: "", suggestions: "" }); }}
+            <button onClick={() => { setSent(false); setBranch("all"); setForm({ name: "", phone: "", complaint: "", suggestions: "" }); }}
               className="mt-6 gradient-orange text-white px-7 py-3 rounded-xl font-bold text-sm shadow-orange-md hover:-translate-y-0.5 transition-all duration-300">
               Send Another
             </button>
@@ -96,9 +95,8 @@ export default function Feedback() {
           <form onSubmit={handleSubmit} className="premium-card p-8 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" className="input" />
-              <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="input" />
+              <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number" className="input" />
             </div>
-            <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number" className="input" />
             <textarea name="complaint" value={form.complaint} onChange={handleChange} placeholder="Describe your complaint *" rows={4} className="textarea" />
             <textarea name="suggestions" value={form.suggestions} onChange={handleChange} placeholder="Any suggestions for us?" rows={3} className="textarea" />
             {error && <div className="border border-red-500/20 bg-red-500/8 rounded-xl px-4 py-3 text-sm text-red-400">⚠️ {error}</div>}

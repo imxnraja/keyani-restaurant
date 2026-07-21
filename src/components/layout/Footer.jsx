@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaPhone, FaClock } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa6";
 import logo from "../../assets/images/logo.jpg";
 
 const quickLinks = [
@@ -48,8 +49,8 @@ export default function Footer() {
             </p>
             <div className="flex gap-2.5">
               {[
-                { href: "https://facebook.com", Icon: FaFacebookF },
-                { href: "https://instagram.com", Icon: FaInstagram },
+                { href: "https://www.tiktok.com/@keyanirestaurant?_r=1&_t=ZS-98DSBiIP3Ui", Icon: FaTiktok },
+                { href: "https://www.instagram.com/keyanirestaurant?igsh=OGc3eXFkeGRwM2lm&utm_source=qr", Icon: FaInstagram },
                 { href: "https://wa.me/923022264444", Icon: FaWhatsapp },
               ].map(({ href, Icon }) => (
                 <a
@@ -128,10 +129,6 @@ export default function Footer() {
                   <FaPhone size={10} className="text-white/20 shrink-0" />
                   <p className="text-xs text-white/30 font-medium">0302 2264444</p>
                 </div>
-              </li>
-              <li className="flex items-center gap-1.5 pt-3">
-                <FaEnvelope size={10} className="text-orange/40 shrink-0" />
-                <p className="text-xs text-white/25 font-light">hello@keyanirestaurant.pk</p>
               </li>
             </ul>
           </div>
