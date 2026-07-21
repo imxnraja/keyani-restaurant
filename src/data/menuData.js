@@ -60,10 +60,12 @@ export const menuItems = [
   { id: "k-6",  category: "karahi", name: "Chicken Karahi",         price: 750,  unit: "half" },
   { id: "k-7",  category: "karahi", name: "Chicken White Karahi",   price: 1500, unit: "full" },
   { id: "k-8",  category: "karahi", name: "Chicken White Karahi",   price: 800,  unit: "half" },
-  { id: "k-9",  category: "karahi", name: "Handi Karahi (Chicken)", price: 1500, unit: "full" },
-  { id: "k-10", category: "karahi", name: "Handi Karahi (Chicken)", price: 800,  unit: "half" },
-  { id: "k-11", category: "karahi", name: "Shinwari Karahi",        price: 1800, unit: "full" },
-  { id: "k-12", category: "karahi", name: "Shinwari Karahi",        price: 950,  unit: "half" },
+  { id: "k-9",  category: "karahi", name: "Chicken Makhni Karahi",  price: 2390, unit: "full" },
+  { id: "k-10", category: "karahi", name: "Chicken Makhni Karahi",  price: 1240, unit: "half" },
+  { id: "k-11", category: "karahi", name: "Handi Karahi (Chicken)", price: 1500, unit: "full" },
+  { id: "k-12", category: "karahi", name: "Handi Karahi (Chicken)", price: 800,  unit: "half" },
+  { id: "k-13", category: "karahi", name: "Shinwari Karahi",        price: 1800, unit: "full" },
+  { id: "k-14", category: "karahi", name: "Shinwari Karahi",        price: 950,  unit: "half" },
 
   // ─── TAWA SPECIAL ────────────────────────────────────────
   { id: "t-1", category: "tawa", name: "Tawa Beef",          price: 1800, unit: "full" },

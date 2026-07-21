@@ -35,7 +35,7 @@ export default function MenuBranch1() {
           <span className="flex items-center gap-1.5 text-luxury-medium text-xs font-semibold">
             <HiPhone size={11} className="text-orange" />0302 5202020
           </span>
-          <span className="text-luxury-medium text-xs font-semibold">🕐 12:00 PM – 1:00 AM</span>
+          <span className="text-luxury-medium text-xs font-semibold">🕐 8:30 AM – 12:00 AM</span>
         </div>
         <p className="text-gold-light mt-2 text-[11px] tracking-wide font-medium">All prices in PKR · Dine-in, Takeaway &amp; Delivery</p>
       </div>
@@ -48,7 +48,7 @@ export default function MenuBranch1() {
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
-              className={`shrink-0 px-5 py-2.5 rounded-xl text-[12px] font-bold border transition-all duration-300 whitespace-nowrap tracking-wide ${
+              className={`shrink-0 px-4 sm:px-5 py-2.5 rounded-xl text-[12px] font-bold border transition-all duration-300 whitespace-nowrap tracking-wide ${
                 active === cat.id
                   ? "bg-white text-black border-white shadow-dark"
                   : "bg-white/3 border-white/7 text-white/40 hover:border-white/20 hover:text-white/70"
@@ -69,46 +69,46 @@ export default function MenuBranch1() {
         {/* Menu table */}
         <div className="rounded-2xl overflow-hidden border border-white/7">
           {/* Header */}
-          <div className="grid grid-cols-12 px-6 py-4 bg-bg-3 border-b border-white/5">
-            <span className="col-span-7 text-[10px] uppercase tracking-[0.3em] text-white/25 font-bold">Item</span>
-            <span className="col-span-3 text-center text-[10px] uppercase tracking-[0.3em] text-white/25 font-bold">Size</span>
-            <span className="col-span-2 text-right text-[10px] uppercase tracking-[0.3em] text-white/25 font-bold">Price</span>
+          <div className="grid grid-cols-12 px-3 sm:px-6 py-4 bg-bg-3 border-b border-white/5 gap-1">
+            <span className="col-span-5 sm:col-span-6 text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Item</span>
+            <span className="col-span-3 text-center text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Size</span>
+            <span className="col-span-4 sm:col-span-3 text-right text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Price</span>
           </div>
 
           {/* Rows */}
           <div className="divide-y divide-white/4 max-h-[65vh] overflow-y-auto bg-bg-card">
             {Object.entries(grouped).map(([name, variants]) =>
               variants.length === 1 ? (
-                <div key={variants[0].id} className="menu-row group">
-                  <div className="col-span-7">
-                    <p className="text-sm font-semibold text-white/75 group-hover:text-white transition-colors">{variants[0].name}</p>
-                    <p className="text-xs text-white/22 mt-0.5 font-light">{variants[0].unit}</p>
+                <div key={variants[0].id} className="menu-row group px-3 sm:px-6 py-3.5 gap-1">
+                  <div className="col-span-5 sm:col-span-6 pr-1">
+                    <p className="text-xs sm:text-sm font-semibold text-white/75 group-hover:text-white transition-colors leading-tight">{variants[0].name}</p>
+                    <p className="text-[11px] text-white/22 mt-0.5 font-light">{variants[0].unit}</p>
                     {variants[0].desc && (
-                      <p className="text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
+                      <p className="text-[10px] sm:text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
                     )}
                   </div>
                   <div className="col-span-3 text-center">
                     <span className="text-xs text-white/18">—</span>
                   </div>
-                  <div className="col-span-2 text-right">
-                    <span className="font-bold text-orange text-sm">{variants[0].price != null ? `Rs. ${variants[0].price.toLocaleString()}` : "—"}</span>
+                  <div className="col-span-4 sm:col-span-3 text-right">
+                    <span className="font-bold text-orange text-xs sm:text-sm whitespace-nowrap">{variants[0].price != null ? `Rs. ${variants[0].price.toLocaleString()}` : "—"}</span>
                   </div>
                 </div>
               ) : (
                 <div key={name} className="divide-y divide-white/3">
                   {variants.map((item, idx) => (
-                    <div key={item.id} className="menu-row">
-                      <div className="col-span-7">
-                        <p className={`text-sm transition-colors ${idx === 0 ? "font-semibold text-white/75" : "text-white/35 font-light"}`}>{item.name}</p>
+                    <div key={item.id} className="menu-row px-3 sm:px-6 py-3.5 gap-1">
+                      <div className="col-span-5 sm:col-span-6 pr-1">
+                        <p className={`text-xs sm:text-sm transition-colors leading-tight ${idx === 0 ? "font-semibold text-white/75" : "text-white/35 font-light"}`}>{item.name}</p>
                         {item.pieces && <p className="text-[10px] text-white/20 mt-0.5">{item.pieces}</p>}
                       </div>
                       <div className="col-span-3 text-center">
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap ${item.unit === "full" ? "bg-orange/12 text-orange border border-orange/20" : "bg-white/5 text-white/35 border border-white/8"}`}>
+                        <span className={`text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-semibold whitespace-nowrap ${item.unit === "full" ? "bg-orange/12 text-orange border border-orange/20" : "bg-white/5 text-white/35 border border-white/8"}`}>
                           {item.unit === "full" ? "Full" : item.unit === "half" ? "Half" : item.unit}
                         </span>
                       </div>
-                      <div className="col-span-2 text-right">
-                        <span className="font-bold text-orange text-sm">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "—"}</span>
+                      <div className="col-span-4 sm:col-span-3 text-right">
+                        <span className="font-bold text-orange text-xs sm:text-sm whitespace-nowrap">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "—"}</span>
                       </div>
                     </div>
                   ))}

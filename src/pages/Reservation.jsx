@@ -120,6 +120,8 @@ export default function Reservation() {
   const [eventType, setEventType] = useState("");
   const [venue, setVenue] = useState("");
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", time: "", guests: "", notes: "" });
+  const [dateFocused, setDateFocused] = useState(false);
+  const [timeFocused, setTimeFocused] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState("");
 
@@ -283,8 +285,27 @@ export default function Reservation() {
                 <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" className="input" />
                 <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address (optional)" className="input" />
                 <input name="guests" type="number" min="1" value={form.guests} onChange={handleChange} placeholder="Number of Guests *" className="input" />
-                <input name="date" type="date" value={form.date} onChange={handleChange} className="input" min={new Date().toISOString().split("T")[0]} />
-                <input name="time" type="time" value={form.time} onChange={handleChange} className="input" />
+                <input
+                  name="date"
+                  type={dateFocused || form.date ? "date" : "text"}
+                  onFocus={() => setDateFocused(true)}
+                  onBlur={() => setDateFocused(false)}
+                  value={form.date}
+                  onChange={handleChange}
+                  placeholder="Event Date *"
+                  className="input"
+                  min={new Date().toISOString().split("T")[0]}
+                />
+                <input
+                  name="time"
+                  type={timeFocused || form.time ? "time" : "text"}
+                  onFocus={() => setTimeFocused(true)}
+                  onBlur={() => setTimeFocused(false)}
+                  value={form.time}
+                  onChange={handleChange}
+                  placeholder="Event Time *"
+                  className="input"
+                />
                 <textarea name="notes" value={form.notes} onChange={handleChange}
                   placeholder="Special requests, decoration preferences, dietary needs..." rows={3} className="textarea sm:col-span-2" />
               </div>

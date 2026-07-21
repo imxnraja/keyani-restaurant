@@ -11,7 +11,7 @@ const branches = [
     address: "Aslam Market, Wah Cantt, 47040",
     phone: "0302 5202020",
     whatsapp: "923025202020",
-    hours: "12:00 PM – 1:00 AM",
+    hours: "8:30 AM – 12:00 AM",
     menu: [...branch1Categories.slice(0, 5).map(c => c.label), "& more"],
     service: "Dine-in & Takeaway",
     event: false,
@@ -23,7 +23,7 @@ const branches = [
     address: "GT Road, Wah Cantt, 47040",
     phone: "0302 2264444",
     whatsapp: "923022264444",
-    hours: "12:00 PM – 2:00 AM",
+    hours: "Mon–Fri: 12:00 PM – 12:00 AM | Sat–Sun: 7:00 AM – 12:00 AM",
     menu: [...branch2Categories.slice(0, 5).map(c => c.label), "& more"],
     service: "Dine-in, Takeaway & Events",
     event: true,
@@ -111,8 +111,8 @@ export default function Contact() {
           <div className="space-y-4">
             {[
               { Icon: FaEnvelope, label: "Email", value: "hello@keyanirestaurant.pk" },
-              { Icon: FaClock, label: "Mon–Thu", value: "12:00 PM – 1:00 AM" },
-              { Icon: FaClock, label: "Fri–Sun", value: "12:00 PM – 2:00 AM" },
+              { Icon: FaClock, label: "Branch 1 (Aslam Market)", value: "8:30 AM – 12:00 AM" },
+              { Icon: FaClock, label: "Branch 2 (GT Road)", value: "Mon–Fri 12 PM–12 AM | Sat–Sun 7 AM–12 AM" },
             ].map(i => (
               <div key={i.label} className="premium-card p-5 flex items-center gap-4">
                 <div className="w-11 h-11 rounded-xl bg-orange/10 border border-orange/15 flex items-center justify-center text-orange shrink-0">

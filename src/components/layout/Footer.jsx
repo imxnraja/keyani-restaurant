@@ -13,8 +13,8 @@ const quickLinks = [
 ];
 
 const hours = [
-  { day: "Monday – Thursday", time: "12:00 PM – 11:30 PM" },
-  { day: "Friday – Sunday",   time: "12:00 PM – 1:00 AM" },
+  { day: "Branch 1 (Aslam Market)", time: "8:30 AM – 12:00 AM" },
+  { day: "Branch 2 (GT Road)", time: "Mon–Fri: 12 PM – 12 AM | Sat–Sun: 7 AM – 12 AM" },
 ];
 
 export default function Footer() {

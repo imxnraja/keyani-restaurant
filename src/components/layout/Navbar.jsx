@@ -118,55 +118,41 @@ export default function Navbar() {
 
       {/* Mobile overlay */}
       <div
-        className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 bg-bg/98 backdrop-blur-xl ${
           open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="absolute inset-0 bg-bg" />
         {/* Ambient glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange/6 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative h-full flex flex-col items-center justify-center gap-1 px-8">
-          {/* Logo in mobile menu */}
-          <div className="mb-10 flex flex-col items-center gap-4">
-            <div className="relative">
-              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-gold/60 via-orange/50 to-gold/40 opacity-85 pointer-events-none animate-pulse-ring" />
-              <div className="absolute -inset-1 rounded-full border border-gold/30" />
-              <img src={logo} alt="Keyani Restaurant" className="h-24 w-24 rounded-full object-cover border border-transparent p-1.5 relative z-10 shadow-gold-sm" />
-            </div>
-            <div className="text-center">
-              <p className="text-gradient-gold font-display text-4xl font-bold tracking-wide" style={{ letterSpacing: "-0.01em" }}>Keyani</p>
-              <p className="text-[10px] tracking-[0.5em] uppercase text-gold/90 font-extrabold mt-2">
-                Restaurant<span className="text-orange/60 mx-1.5">•</span>Est. 1985
-              </p>
-            </div>
-          </div>
+        <div className="relative h-full flex flex-col items-center justify-center pt-24 pb-8 px-6 overflow-y-auto">
+          <div className="w-full max-w-sm flex flex-col items-center gap-1.5">
+            {links.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === "/"}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `w-full text-center py-3 font-display text-xl sm:text-2xl font-bold rounded-2xl transition-all duration-300 ${
+                    isActive
+                      ? "text-orange bg-orange/10 border border-orange/20 shadow-orange-sm"
+                      : "text-white/70 hover:text-white hover:bg-white/4"
+                  }`
+                }
+              >
+                {l.label}
+              </NavLink>
+            ))}
 
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.to === "/"}
+            <Link
+              to="/order"
               onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                `w-full text-center py-4 font-display text-2xl font-bold rounded-2xl transition-all duration-300 ${
-                  isActive
-                    ? "text-orange bg-orange/8"
-                    : "text-white/65 hover:text-white hover:bg-white/3"
-                }`
-              }
+              className="mt-6 w-full btn-orange py-3.5 rounded-2xl text-sm sm:text-base font-bold text-center justify-center shadow-orange-md"
             >
-              {l.label}
-            </NavLink>
-          ))}
-
-          <Link
-            to="/order"
-            onClick={() => setOpen(false)}
-            className="mt-8 w-full btn-orange py-4 rounded-2xl text-base font-bold text-center justify-center"
-          >
-            Order Now →
-          </Link>
+              Order Now →
+            </Link>
+          </div>
         </div>
       </div>
     </>
