@@ -28,6 +28,7 @@ export const branch2Categories = [
   { id: "breakfast", label: "Breakfast" },
   { id: "ready-to-eat", label: "Ready to Eat" },
   { id: "fastfood", label: "Fast Food" },
+  { id: "breads", label: "Roti & Naan" },
   { id: "winter-fish", label: "Winter Special — Fish" },
   { id: "soup", label: "Soup" },
   { id: "sides", label: "Sides" },
@@ -188,20 +189,20 @@ export const branch2Items = [
   { id: "b2-mh-6", category: "mutton-handi", name: "Mutton Achari Handi",         price: 1690, unit: "half" },
 
   // ─── B.B.Q ───────────────────────────────────────────────
-  { id: "b2-bbq-1",  category: "bbq", name: "Chicken Chargha",             price: 1590, unit: "full" },
-  { id: "b2-bbq-2",  category: "bbq", name: "Chicken Chargha",             price: 840,  unit: "half" },
+  { id: "b2-bbq-1",  category: "bbq", name: "Chicken Chargha",             price: 1590, unit: "full", pieces: "Full Chicken" },
+  { id: "b2-bbq-2",  category: "bbq", name: "Chicken Chargha",             price: 840,  unit: "half", pieces: "Half Chicken" },
   { id: "b2-bbq-3",  category: "bbq", name: "Chicken Tikka (Leg Piece)",   price: 450,  unit: "per piece" },
   { id: "b2-bbq-4",  category: "bbq", name: "Chicken Tikka (Chest Piece)", price: 460,  unit: "per piece" },
-  { id: "b2-bbq-5",  category: "bbq", name: "Chicken Boti",                price: 1040, unit: "full" },
-  { id: "b2-bbq-6",  category: "bbq", name: "Chicken Boti",                price: 590,  unit: "half" },
-  { id: "b2-bbq-7",  category: "bbq", name: "Chicken Malai Boti",          price: 1240, unit: "full" },
-  { id: "b2-bbq-8",  category: "bbq", name: "Chicken Malai Boti",          price: 690,  unit: "half" },
-  { id: "b2-bbq-9",  category: "bbq", name: "Chicken Reshmi Kebab",        price: 1040, unit: "full" },
-  { id: "b2-bbq-10", category: "bbq", name: "Chicken Reshmi Kebab",        price: 590,  unit: "half" },
-  { id: "b2-bbq-11", category: "bbq", name: "Beef Tikka",                  price: 1040, unit: "full" },
-  { id: "b2-bbq-12", category: "bbq", name: "Beef Tikka",                  price: 590,  unit: "half" },
-  { id: "b2-bbq-13", category: "bbq", name: "Beef Seekh Kebab",            price: 1040, unit: "full" },
-  { id: "b2-bbq-14", category: "bbq", name: "Beef Seekh Kebab",            price: 590,  unit: "half" },
+  { id: "b2-bbq-5",  category: "bbq", name: "Chicken Boti",                price: 1040, unit: "full", pieces: "12 pcs" },
+  { id: "b2-bbq-6",  category: "bbq", name: "Chicken Boti",                price: 590,  unit: "half", pieces: "6 pcs" },
+  { id: "b2-bbq-7",  category: "bbq", name: "Chicken Malai Boti",          price: 1240, unit: "full", pieces: "12 pcs" },
+  { id: "b2-bbq-8",  category: "bbq", name: "Chicken Malai Boti",          price: 690,  unit: "half", pieces: "6 pcs" },
+  { id: "b2-bbq-9",  category: "bbq", name: "Chicken Reshmi Kebab",        price: 1040, unit: "full", pieces: "6 pcs" },
+  { id: "b2-bbq-10", category: "bbq", name: "Chicken Reshmi Kebab",        price: 590,  unit: "half", pieces: "3 pcs" },
+  { id: "b2-bbq-11", category: "bbq", name: "Beef Tikka",                  price: 1040, unit: "full", pieces: "24 pcs" },
+  { id: "b2-bbq-12", category: "bbq", name: "Beef Tikka",                  price: 590,  unit: "half", pieces: "12 pcs" },
+  { id: "b2-bbq-13", category: "bbq", name: "Beef Seekh Kebab",            price: 1040, unit: "full", pieces: "6 pcs" },
+  { id: "b2-bbq-14", category: "bbq", name: "Beef Seekh Kebab",            price: 590,  unit: "half", pieces: "3 pcs" },
 
   // ─── B.B.Q KARAHI ────────────────────────────────────────
   { id: "b2-bk-1",  category: "bbq-karahi", name: "Beef Tikka Fry",           price: 2290, unit: "full" },
@@ -286,6 +287,7 @@ export const branch2Items = [
   { id: "b2-rte-12", category: "ready-to-eat", name: "Sabzi",                          price: 250, unit: "per plate" },
   { id: "b2-rte-13", category: "ready-to-eat", name: "Daal Chawal",                    price: 310, unit: "per plate" },
   { id: "b2-rte-14", category: "ready-to-eat", name: "Channa Chawal",                  price: 310, unit: "per plate" },
+  { id: "b2-rte-15", category: "ready-to-eat", name: "Fry Salan",                      price: 400, unit: "per plate" },
 
   // ─── FAST FOOD ───────────────────────────────────────────
   { id: "b2-ff-1",  category: "fastfood", name: "Egg Burger",                       price: 200, unit: "per piece" },
@@ -300,6 +302,15 @@ export const branch2Items = [
   { id: "b2-ff-10", category: "fastfood", name: "Anda Paratha Roll",                price: 220, unit: "per piece" },
   { id: "b2-ff-11", category: "fastfood", name: "Beef Tikka Paratha Roll",          price: 310, unit: "per piece" },
   { id: "b2-ff-12", category: "fastfood", name: "Seekh Kebab Paratha Roll",         price: 310, unit: "per piece" },
+  { id: "b2-ff-13", category: "fastfood", name: "Shami Kabab Paratha Roll",         price: 250, unit: "per piece" },
+
+  // ─── ROTI & NAAN ─────────────────────────────────────────
+  { id: "b2-br-1", category: "breads", name: "Tandoori Roti",        price: 25,  unit: "per piece" },
+  { id: "b2-br-2", category: "breads", name: "Plain Naan",            price: 30,  unit: "per piece" },
+  { id: "b2-br-3", category: "breads", name: "Roghni Naan",           price: 90,  unit: "per piece" },
+  { id: "b2-br-4", category: "breads", name: "Kulcha Naan",           price: 60,  unit: "per piece" },
+  { id: "b2-br-5", category: "breads", name: "Special Tawa Paratha",  price: 90,  unit: "per piece" },
+  { id: "b2-br-6", category: "breads", name: "Afghani Naan",          price: 70,  unit: "per piece" },
 
   // ─── WINTER SPECIAL — FISH ───────────────────────────────
   { id: "b2-fish-1", category: "winter-fish", name: "Dakha Fish",           price: 1590, unit: "full", pieces: "16 pcs" },
@@ -329,7 +340,7 @@ export const branch2Items = [
   { id: "b2-sd-4", category: "sides", name: "Fries",       price: 220, unit: "per plate" },
 
   // ─── DESSERTS ────────────────────────────────────────────
-  { id: "b2-ds-1", category: "desserts", name: "Special Gajar Halwa (Winter)", price: 180, unit: "per plate" },
+  { id: "b2-ds-1", category: "desserts", name: "Special Gajar Halwa (Winter)", price: 200, unit: "per plate" },
   { id: "b2-ds-2", category: "desserts", name: "Khoye Wali Kheer",             price: 190, unit: "per bowl" },
   { id: "b2-ds-3", category: "desserts", name: "Russian Salad",                price: 390, unit: "S" },
   { id: "b2-ds-4", category: "desserts", name: "Russian Salad",                price: 790, unit: "M" },
@@ -360,9 +371,10 @@ export const branch2Items = [
   { id: "b2-dr-2", category: "drinks", name: "Green Tea",          price: 70,   unit: "per cup" },
   { id: "b2-dr-3", category: "drinks", name: "Lassi Sweet",        price: 190,  unit: "per glass" },
   { id: "b2-dr-4", category: "drinks", name: "Lassi Salted",       price: 160,  unit: "per glass" },
-  { id: "b2-dr-5", category: "drinks", name: "Cold Drink",         price: null, unit: "1.5 Ltr" },
-  { id: "b2-dr-6", category: "drinks", name: "Water Bottle",       price: null, unit: "Large" },
-  { id: "b2-dr-7", category: "drinks", name: "Water Bottle",       price: null, unit: "Small" },
+  { id: "b2-dr-5", category: "drinks", name: "Cold Drink",         price: 250,  unit: "1.5 Ltr" },
+  { id: "b2-dr-6", category: "drinks", name: "Water Bottle",       price: 140,  unit: "Large" },
+  { id: "b2-dr-7", category: "drinks", name: "Water Bottle",       price: 80,   unit: "Small" },
+  { id: "b2-dr-8", category: "drinks", name: "Pheeki Doodh Pati",  price: 100,  unit: "per cup" },
 ];
 
 // ── Branch 1 (Aslam Market) — same real in-store menu as Branch 2, ──

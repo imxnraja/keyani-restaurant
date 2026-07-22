@@ -21,8 +21,6 @@ function buildWhatsAppMessage({ form, cartItems, total, branch, payment }) {
   const selectedBranch = BRANCHES.find(b => b.id === branch);
   const orderNo = `KR-${Date.now().toString().slice(-6)}`;
   const time = new Date().toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
-  const deliveryCharge = total > 0 ? 250 : 0;
-  const grandTotal = total + deliveryCharge;
 
   const itemLines = cartItems
     .map(i => slipRow(`${i.name} (${i.unit}${i.pieces ? `, ${i.pieces}` : ""}) x${i.qty}`, `Rs.${(i.price * i.qty).toLocaleString()}`))
@@ -31,10 +29,7 @@ function buildWhatsAppMessage({ form, cartItems, total, branch, payment }) {
   const slip =
     `${itemLines}
 ${"-".repeat(SLIP_WIDTH)}
-${slipRow("Subtotal", `Rs.${total.toLocaleString()}`)}
-${slipRow("Delivery Charge", `Rs.${deliveryCharge.toLocaleString()}`)}
-${"-".repeat(SLIP_WIDTH)}
-${slipRow("TOTAL", `Rs.${grandTotal.toLocaleString()}`)}`;
+${slipRow("TOTAL", `Rs.${total.toLocaleString()}`)}`;
 
   const msg =
     `🍖 *KEYANI RESTAURANT*
@@ -53,6 +48,8 @@ Address: ${form.address}, ${form.city}${form.notes ? `\nNotes: ${form.notes}` : 
 ${slip}
 \`\`\`
 
+*Note: Delivery charges will be charged according to your exact location.*
+
 Payment: ${payment === "cod" ? "Cash on Delivery" : "Bank Transfer"}
 
 Thank you for ordering from Keyani Restaurant! 🙏`;
@@ -60,71 +57,7 @@ Thank you for ordering from Keyani Restaurant! 🙏`;
   return encodeURIComponent(msg);
 }
 
-// ── Success Popup ──────────────────────────────────────────
-function SuccessPopup({ onClose, onWhatsApp }) {
-  useEffect(() => {
-    const t = setTimeout(onClose, 8000);
-    return () => clearTimeout(t);
-  }, [onClose]);
-
-  return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4"
-      onClick={onClose}>
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-
-      {/* Card */}
-      <div
-        className="relative premium-card p-8 sm:p-10 max-w-md w-full text-center shadow-orange-lg"
-        onClick={e => e.stopPropagation()}
-        style={{ animation: "scaleIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards" }}>
-
-        {/* Close */}
-        <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-all">
-          <HiX size={14} />
-        </button>
-
-        {/* Success icon */}
-        <div className="relative w-20 h-20 mx-auto mb-6">
-          <div className="absolute inset-0 rounded-full gradient-orange animate-pulse-ring opacity-40" />
-          <div className="relative w-20 h-20 rounded-full gradient-orange flex items-center justify-center shadow-orange-lg">
-            <HiCheckCircle className="text-white" size={40} />
-          </div>
-        </div>
-
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">
-          Order Placed!
-        </h2>
-        <p className="text-white/45 text-sm leading-relaxed mb-8">
-          Your order has been received. Please send us the receipt on WhatsApp so we can confirm and process it right away.
-        </p>
-
-        {/* WhatsApp button */}
-        <button
-          onClick={onWhatsApp}
-          className="w-full flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1fbd5c] text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-lg mb-3">
-          <FaWhatsapp size={20} />
-          Send Order Receipt on WhatsApp
-        </button>
-
-        <button onClick={onClose} className="w-full border border-white/10 bg-white/3 text-white/40 hover:text-white/60 py-3 rounded-xl text-sm font-medium transition-all">
-          Close
-        </button>
-
-        {/* Auto-close bar */}
-        <div className="mt-5 h-0.5 w-full bg-white/6 rounded-full overflow-hidden">
-          <div className="h-full bg-orange/50 rounded-full" style={{ animation: "shrink 8s linear forwards" }} />
-        </div>
-        <p className="text-white/20 text-xs mt-2">Closes automatically in 8 seconds</p>
-      </div>
-
-      <style>{`
-        @keyframes scaleIn { from{opacity:0;transform:scale(0.88)} to{opacity:1;transform:scale(1)} }
-        @keyframes shrink { from{width:100%} to{width:0%} }
-      `}</style>
-    </div>
-  );
-}
+// Success Popup is bypassed for direct checkout redirection
 
 // ── Main Component ─────────────────────────────────────────
 export default function OrderNow() {
@@ -135,8 +68,6 @@ export default function OrderNow() {
   const [activeCategory, setActiveCategory] = useState("bbq");
   const [form, setForm] = useState({ name: "", phone: "", address: "", city: "", notes: "" });
   const [payment, setPayment] = useState("cod");
-  const [showPopup, setShowPopup] = useState(false);
-  const [whatsAppUrl, setWhatsAppUrl] = useState("");
   const [error, setError] = useState("");
 
   // Each branch shows its own real menu; default to Branch 2's (fullest) menu as a preview until a branch is picked
@@ -166,7 +97,7 @@ export default function OrderNow() {
     [cart]
   );
   const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
-  const total = subtotal + (subtotal > 0 ? 250 : 0);
+  const total = subtotal;
 
   const updateCart = (id, delta) => setCart(c => ({ ...c, [id]: Math.max(0, (c[id] || 0) + delta) }));
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
@@ -181,21 +112,12 @@ export default function OrderNow() {
     // Build WhatsApp receipt URL — message goes to the selected branch's own WhatsApp
     const selectedBranch = BRANCHES.find(b => b.id === branch);
     const msg = buildWhatsAppMessage({ form, cartItems, total: subtotal, branch, payment });
-    setWhatsAppUrl(`https://wa.me/${selectedBranch.whatsapp}?text=${msg}`);
-    setShowPopup(true);
-  };
+    const waUrl = `https://wa.me/${selectedBranch.whatsapp}?text=${msg}`;
+    
+    // Redirect directly to WhatsApp
+    window.open(waUrl, "_blank");
 
-  const handleWhatsApp = () => {
-    window.open(whatsAppUrl, "_blank");
-    setShowPopup(false);
-    setCart({});
-    setForm({ name: "", phone: "", address: "", city: "", notes: "" });
-    setBranch("");
-    setPayment("cod");
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
+    // Reset checkout form and cart immediately
     setCart({});
     setForm({ name: "", phone: "", address: "", city: "", notes: "" });
     setBranch("");
@@ -204,7 +126,6 @@ export default function OrderNow() {
 
   return (
     <>
-      {showPopup && <SuccessPopup onClose={handleClosePopup} onWhatsApp={handleWhatsApp} />}
 
       <div className="min-h-screen bg-bg">
         {/* Header */}
@@ -378,17 +299,14 @@ export default function OrderNow() {
                 }
 
                 <div className="space-y-2 border-t border-white/8 pt-4">
-                  <div className="flex justify-between text-sm text-white/40">
-                    <span>Subtotal</span>
-                    <span>Rs. {subtotal.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-white/40">
-                    <span>🛵 Delivery Charge</span>
-                    <span className="text-orange">Rs. 250</span>
-                  </div>
-                  <div className="flex justify-between items-center pt-2 border-t border-white/8">
+                  <div className="flex justify-between items-center">
                     <span className="text-white/60 font-bold">Total</span>
                     <span className="text-gradient font-display text-2xl font-bold">Rs. {total.toLocaleString()}</span>
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-xs text-orange font-medium">
+                      🛵 Delivery charges will be charged according to your exact location.
+                    </p>
                   </div>
                 </div>
 
