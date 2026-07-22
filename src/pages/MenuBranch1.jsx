@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { branch1Categories, branch1Items } from "../data/menuData";
+import { branch1Categories, branch1Items, categoryVisuals } from "../data/menuData";
 import { Link } from "react-router-dom";
 import { HiLocationMarker, HiPhone, HiArrowRight } from "react-icons/hi";
 
@@ -40,7 +40,7 @@ export default function MenuBranch1() {
         <p className="text-gold-light mt-2 text-[11px] tracking-wide font-medium">All prices in PKR · Dine-in, Takeaway &amp; Delivery</p>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-24 mt-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-24 mt-6">
 
         {/* Category tabs */}
         <div className="flex gap-2 overflow-x-auto pb-3 mb-8 scrollbar-hide">
@@ -78,56 +78,45 @@ export default function MenuBranch1() {
           </div>
         )}
 
-        {/* Menu table */}
-        <div className="rounded-2xl overflow-hidden border border-white/7">
-          {/* Header */}
-          <div className="grid grid-cols-12 px-3 sm:px-6 py-4 bg-bg-3 border-b border-white/5 gap-1">
-            <span className="col-span-5 sm:col-span-6 text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Item</span>
-            <span className="col-span-3 text-center text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Size</span>
-            <span className="col-span-4 sm:col-span-3 text-right text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/25 font-bold">Price</span>
-          </div>
-
-          {/* Rows */}
-          <div className="divide-y divide-white/4 max-h-[65vh] overflow-y-auto bg-bg-card">
-            {Object.entries(grouped).map(([name, variants]) =>
-              variants.length === 1 ? (
-                <div key={variants[0].id} className="menu-row group px-3 sm:px-6 py-3.5 gap-1">
-                  <div className="col-span-5 sm:col-span-6 pr-1">
-                    <p className="text-xs sm:text-sm font-semibold text-white/75 group-hover:text-white transition-colors leading-tight">{variants[0].name}</p>
-                    <p className="text-[11px] text-white/22 mt-0.5 font-light">{variants[0].unit}</p>
-                    {variants[0].desc && (
-                      <p className="text-[10px] sm:text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
-                    )}
-                  </div>
-                  <div className="col-span-3 text-center">
-                    <span className="text-xs text-white/18">—</span>
-                  </div>
-                  <div className="col-span-4 sm:col-span-3 text-right">
-                    <span className="font-bold text-orange text-xs sm:text-sm whitespace-nowrap">{variants[0].price != null ? `Rs. ${variants[0].price.toLocaleString()}` : "—"}</span>
-                  </div>
+        {/* Menu grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {Object.entries(grouped).map(([name, variants]) => {
+            const visual = categoryVisuals[variants[0].category];
+            return (
+              <div key={name} className="rounded-2xl overflow-hidden border border-white/8 bg-bg-card group hover:border-orange/30 transition-all duration-300">
+                <div className="relative aspect-[4/3] overflow-hidden bg-bg-3">
+                  {visual?.image ? (
+                    <img
+                      src={visual.image}
+                      alt={name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-4xl opacity-30">{visual?.icon ?? "🍽️"}</div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                 </div>
-              ) : (
-                <div key={name} className="divide-y divide-white/3">
-                  {variants.map((item, idx) => (
-                    <div key={item.id} className="menu-row px-3 sm:px-6 py-3.5 gap-1">
-                      <div className="col-span-5 sm:col-span-6 pr-1">
-                        <p className={`text-xs sm:text-sm transition-colors leading-tight ${idx === 0 ? "font-semibold text-white/75" : "text-white/35 font-light"}`}>{item.name}</p>
-                        {item.pieces && <p className="text-[10px] text-white/20 mt-0.5">{item.pieces}</p>}
-                      </div>
-                      <div className="col-span-3 text-center">
-                        <span className={`text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-semibold whitespace-nowrap ${item.unit === "full" ? "bg-orange/12 text-orange border border-orange/20" : "bg-white/5 text-white/35 border border-white/8"}`}>
-                          {item.unit === "full" ? "Full" : item.unit === "half" ? "Half" : item.unit}
+                <div className="p-4">
+                  <p className="text-sm font-bold text-white/90 leading-tight">{name}</p>
+                  {variants[0].desc && (
+                    <p className="text-[11px] text-white/30 mt-1 leading-relaxed">{variants[0].desc}</p>
+                  )}
+                  <div className="mt-3 space-y-1.5">
+                    {variants.map(v => (
+                      <div key={v.id} className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] text-white/35 whitespace-nowrap">
+                          {v.unit === "full" ? "Full" : v.unit === "half" ? "Half" : v.unit}
+                          {v.pieces ? ` · ${v.pieces}` : ""}
                         </span>
+                        <span className="font-bold text-orange text-sm whitespace-nowrap">{v.price != null ? `Rs. ${v.price.toLocaleString()}` : "—"}</span>
                       </div>
-                      <div className="col-span-4 sm:col-span-3 text-right">
-                        <span className="font-bold text-orange text-xs sm:text-sm whitespace-nowrap">{item.price != null ? `Rs. ${item.price.toLocaleString()}` : "—"}</span>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              )
-            )}
-          </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Order CTA */}

@@ -388,3 +388,30 @@ export const branch1Categories = branch2Categories.filter(
 export const branch1Items = branch2Items.filter(
   item => !BRANCH1_EXCLUDED_CATEGORIES.includes(item.category)
 );
+
+// ── Category banner visuals (dummy stock photos — swap for real dish
+// photography later by just changing the `image` URL below) ──
+const u = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+
+export const categoryVisuals = {
+  "shinwari":       { icon: "🍖", image: u("photo-1585937421612-70a008356fbe"), tagline: "Smoky Peshawari-style karahi, slow-cooked in pure ghee" },
+  "chicken-karahi":  { icon: "🍛", image: u("photo-1631452180519-c014fe946bc7"), tagline: "Hand-tossed chicken karahi, fresh to order" },
+  "mutton-karahi":   { icon: "🍲", image: u("photo-1585937421612-70a008356fbe"), tagline: "Rich, slow-cooked mutton karahi classics" },
+  "chicken-handi":   { icon: "🥘", image: u("photo-1631452180519-c014fe946bc7"), tagline: "Creamy boneless chicken handi favourites" },
+  "mutton-handi":    { icon: "🥘", image: u("photo-1585937421612-70a008356fbe"), tagline: "Slow-simmered boneless mutton handi" },
+  "bbq":             { icon: "🔥", image: u("photo-1633945274405-b6c8069047b0"), tagline: "Charcoal-grilled seekh, boti & tikka" },
+  "bbq-karahi":      { icon: "🍢", image: u("photo-1603360946369-dc9bb6258143"), tagline: "BBQ meets karahi — fried to perfection" },
+  "bbq-platter":     { icon: "🍽️", image: u("photo-1633945274405-b6c8069047b0"), tagline: "Shareable grill platters for the table" },
+  "tawa-special":    { icon: "🍳", image: u("photo-1599487488170-d11ec9c172f0"), tagline: "Sizzling tawa-fried specialities" },
+  "chinese":         { icon: "🥡", image: u("photo-1603133872878-684f208fb84b"), tagline: "Chinese-style wok dishes & fried rice" },
+  "breakfast":       { icon: "🍞", image: u("photo-1533089860892-a7c6f0a88666"), tagline: "Nihari, paye & classic desi nashta" },
+  "ready-to-eat":    { icon: "🍚", image: u("photo-1596797038530-2c107229654b"), tagline: "Comforting home-style rice & daal" },
+  "fastfood":        { icon: "🌯", image: u("photo-1568901346375-23c9450c58cd"), tagline: "Rolls, burgers & quick bites" },
+  "breads":          { icon: "🫓", image: u("photo-1509440159596-0249088772ff"), tagline: "Fresh-baked tandoori roti & naan" },
+  "winter-fish":     { icon: "🐟", image: u("photo-1580217593608-61931cefc821"), tagline: "Crispy fried fish, a winter favourite" },
+  "soup":            { icon: "🍜", image: u("photo-1547592166-23ac45744acd"), tagline: "Warm, hearty soups made fresh" },
+  "sides":           { icon: "🥗", image: u("photo-1540420773420-3366772f4999"), tagline: "Salads, raita & crispy fries" },
+  "desserts":        { icon: "🍮", image: u("photo-1551024506-0bccd828d307"), tagline: "Traditional sweets to finish your meal" },
+  "bar":             { icon: "🥤", image: u("photo-1572490122747-3968b75cc699"), tagline: "Shakes, juices & refreshing coolers" },
+  "drinks":          { icon: "☕", image: u("photo-1544787219-7f47ccb76574"), tagline: "Tea, lassi & cold drinks" },
+};
