@@ -84,6 +84,18 @@ export default function MenuBranch2() {
             <p className="text-xs text-orange-light font-semibold">Breakfast served on weekends only (Saturday &amp; Sunday).</p>
           </div>
         )}
+        {active === "ready-to-eat" && (
+          <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-orange/20 bg-orange/8 px-4 py-3">
+            <span className="text-orange text-sm shrink-0">🍳</span>
+            <p className="text-xs text-orange-light font-semibold">Note: Rs. 50 extra will be charged for the Fry version of Ready to Eat Salan.</p>
+          </div>
+        )}
+        {(active === "winter-fish" || active === "soup") && (
+          <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-red-500/20 bg-red-500/8 px-4 py-3">
+            <span className="text-red-400 text-sm shrink-0">⚠️</span>
+            <p className="text-xs text-red-400 font-semibold">This category is not available in summers.</p>
+          </div>
+        )}
 
         {/* Menu table */}
         <div className="rounded-2xl overflow-hidden border border-white/7">

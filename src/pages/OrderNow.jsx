@@ -203,6 +203,22 @@ export default function OrderNow() {
                     </p>
                   </div>
                 )}
+                {activeCategory === "ready-to-eat" && (
+                  <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-orange/20 bg-orange/8 px-4 py-3">
+                    <span className="text-orange text-sm shrink-0">🍳</span>
+                    <p className="text-xs text-orange-light font-semibold">
+                      Note: Rs. 50 extra will be charged for the Fry version of Ready to Eat Salan.
+                    </p>
+                  </div>
+                )}
+                {(activeCategory === "winter-fish" || activeCategory === "soup") && (
+                  <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-red-500/20 bg-red-500/8 px-4 py-3">
+                    <span className="text-red-400 text-sm shrink-0">⚠️</span>
+                    <p className="text-xs text-red-400 font-semibold">
+                      This category is not available in summers.
+                    </p>
+                  </div>
+                )}
                 <div className="space-y-1 max-h-72 overflow-y-auto pr-1 scrollbar-hide">
                   {categoryItems.map(item => (
                     <div key={item.id} className="flex items-center justify-between py-3 border-b border-white/4 last:border-0 hover:bg-orange/3 px-2 rounded-lg transition-colors">
